@@ -12,12 +12,17 @@
 
 // header
 #include "function.h"
-#include "class.h"
 
 // using
 using namespace std;
 using namespace dfs-backupper;
 using namespace boost::system;
+
+// declaration
+namespace dfs-backupper
+{
+	class exception;
+}
 
 int wmain(int argc, wchar_t** argv)
 {
