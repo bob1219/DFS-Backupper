@@ -13,7 +13,7 @@ namespace dfs-backupper
 	class setting
 	{
 	public:
-		setting(SettingFile _from, SettingFile _to);
+		setting(SettingFile from, SettingFile to);
 		bool isOpen() { return _isOpen; }
 		bool clear();
 		void list();
