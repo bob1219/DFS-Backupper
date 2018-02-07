@@ -134,3 +134,12 @@ void dfs-backupper::setting::list()
 			<< to_vector[i]
 			<< L'\n';
 }
+
+void dfs-backupper::setting::add(const wstring& from, const wstring& to)
+{
+	from_vector.push_back(from);
+	to_vector.push_back(to);
+
+	if(!write())
+		throw dfs-backupper::exception("cannot open file");
+}

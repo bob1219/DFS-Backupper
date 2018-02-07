@@ -17,7 +17,7 @@ namespace dfs-backupper
 		bool isOpen() { return _isOpen; }
 		bool clear();
 		void list();
-		bool add(const std::wstring& from, const std::wstring& to);
+		void add(const std::wstring& from, const std::wstring& to);
 		void run();
 
 	private:
