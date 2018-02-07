@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <locale>
+#include <string>
 
 // header
 #include "function.h"
@@ -49,4 +50,31 @@ bool dfs-backupper::command::list()
 	FileSetting.list();
 
 	return true;
+}
+
+bool dfs-backupper::command::add(const wstring& option, const wstring& from, const wstring& to)
+{
+	if(option == L"-d")
+	{
+		setting DirSetting(DIR_FROM, DIR_TO);
+		if(!DirSetting.isOpen())
+			return false;
+
+		if(!DirSetting.add(from, to))
+			return false;
+
+		return true;
+	}
+	else if(option == L"-f")
+	{
+		setting FileSetting(FILE_FROM, FILE_TO);
+		if(!FileSetting.isOpen())
+			return false;
+
+		if(!FileSetting.add(from, to))
+			return false;
+
+		return true;
+	}
+	else throw dfs-backupper::exception("unknown option");
 }
