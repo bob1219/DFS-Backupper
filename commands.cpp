@@ -14,36 +14,16 @@ using namespace std;
 
 bool dfs-backupper::command::clear()
 {
-	wostringstream DirFromFilename;
-	DirFromFilename	<< L'.'
-			<< PATH_BREAK_CHARACTER
-			<< L"DIR_FROM";
-	wofstream DirFromFile(DirFromFilename.str());
-	if(DirFromFile.fail())
+	setting DirSetting(DIR_FROM, DIR_TO);
+	if(!DirSetting.isOpen())
+		return false;
+	if(!DirSetting.clear())
 		return false;
 
-	wostringstream DirToFilename;
-	DirToFilename	<< L'.'
-			<< PATH_BREAK_CHARACTER
-			<< L"DIR_TO";
-	wofstream DirToFile(DirToFilename.str());
-	if(DirToFile.fail())
+	setting FileSetting(FILE_FROM, FILE_TO);
+	if(!FileSetting.isOpen())
 		return false;
-
-	wostringstream FileFromFilename;
-	FileFromFilename	<< L'.'
-				<< PATH_BREAK_CHARACTER
-				<< L"FILE_FROM";
-	wofstream FileFromFile(FileFromFilename.str());
-	if(FileFromFile.fail())
-		return false;
-
-	wostringstream FileToFilename;
-	FileToFilename	<< L'.'
-			<< PATH_BREAK_CHARACTER
-			<< L"FILE_TO";
-	wofstream FileToFile(FileToFilename.str());
-	if(FileToFile.fail())
+	if(!FileSetting.clear())
 		return false;
 
 	return true;
