@@ -8,18 +8,25 @@
 // header
 #include "function.h"
 #include "constant.h"
-#include "class.h"
 
 // using
 using namespace std;
 
+// declaration
+namespace dfs-backupper
+{
+	class DirSetting;
+	class FileSetting;
+	class exception;
+}
+
 bool dfs-backupper::command::clear()
 {
-	setting dirSetting(DIR_FROM, DIR_TO);
+	DirSetting dirSetting(DIR_FROM, DIR_TO);
 	if(!dirSetting.isOpen())
 		return false;
 
-	setting fileSetting(FILE_FROM, FILE_TO);
+	FileSetting fileSetting(FILE_FROM, FILE_TO);
 	if(!fileSetting.isOpen())
 		return false;
 
@@ -33,11 +40,11 @@ bool dfs-backupper::command::clear()
 
 bool dfs-backupper::command::list()
 {
-	setting dirSetting(DIR_FROM, DIR_TO);
+	DirSetting dirSetting(DIR_FROM, DIR_TO);
 	if(!dirSetting.isOpen())
 		return false;
 
-	setting fileSetting(FILE_FROM, FILE_TO);
+	FileSetting fileSetting(FILE_FROM, FILE_TO);
 	if(!fileSetting.isOpen())
 		return false;
 
@@ -56,7 +63,7 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 {
 	if(option == L"-d")
 	{
-		setting dirSetting(DIR_FROM, DIR_TO);
+		DirSetting dirSetting(DIR_FROM, DIR_TO);
 		if(!dirSetting.isOpen())
 			return false;
 
@@ -67,7 +74,7 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 	}
 	else if(option == L"-f")
 	{
-		setting fileSetting(FILE_FROM, FILE_TO);
+		FileSetting fileSetting(FILE_FROM, FILE_TO);
 		if(!fileSetting.isOpen())
 			return false;
 
@@ -81,11 +88,11 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 
 bool dfs-backupper::command::run()
 {
-	setting dirSetting(DIR_FROM, DIR_TO);
+	DirSetting dirSetting(DIR_FROM, DIR_TO);
 	if(!dirSetting.isOpen())
 		return false;
 
-	setting fileSetting(FILE_FROM, FILE_TO);
+	FileSetting fileSetting(FILE_FROM, FILE_TO);
 	if(!fileSetting.isOpen())
 		return false;
 
