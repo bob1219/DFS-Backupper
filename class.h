@@ -35,7 +35,7 @@ namespace dfs-backupper
 
 	private:
 		std::wstring message;
-	}
+	};
 }
 
 #endif
