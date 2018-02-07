@@ -78,3 +78,19 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 	}
 	else throw dfs-backupper::exception("unknown option");
 }
+
+bool dfs-backupper::command::run()
+{
+	setting DirSetting(DIR_FROM, DIR_TO);
+	if(!DirSetting.isOpen())
+		return false;
+
+	setting FileSetting(FILE_FROM, FILE_TO);
+	if(!FileSetting.isOpen())
+		return false;
+
+	DirSetting.run();
+	FileSetting.run();
+
+	return true;
+}
