@@ -13,6 +13,12 @@
 // using
 using namespace std;
 
+// declaration
+namespace dfs-backupper
+{
+	class exception;
+}
+
 dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
 {
 	// read _from setting file
