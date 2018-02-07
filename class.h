@@ -21,8 +21,8 @@ namespace dfs-backupper
 		void run();
 
 	private:
-		SettingFile from;
-		SettingFile to;
+		wstring from;
+		wstring to;
 		std::vector<std::wstring> from_vector;
 		std::vector<std::wstring> to_vector;
 		bool _isOpen;

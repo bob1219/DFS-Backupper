@@ -13,11 +13,8 @@
 using namespace std;
 
 dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
-:	from(_from),
-	to(_to)
 {
 	// read _from setting file
-	wstring SettingFilename;
 	wostringstream SettingFilename_oss;
 	switch(_from)
 	{
@@ -25,34 +22,34 @@ dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_FROM";
-		SettingFilename = SettingFilename_oss.str();
+		from = SettingFilename_oss.str();
 		break;
 
 	case DIR_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_TO";
-		SettingFilename = SettingFilename_oss.str();
+		from = SettingFilename_oss.str();
 		break;
 
 	case FILE_FROM:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_FROM";
-		SettingFilename = SettingFilename_oss.str();
+		from = SettingFilename_oss.str();
 		break;
 
 	case FILE_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_TO";
-		SettingFilename = SettingFilename_oss.str();
+		from = SettingFilename_oss.str();
 		break;
 	}
 
 	wifstream FromSettingFile;
 	FromSettingFile.imbue(locale(""));
-	FromSettingFile.open(SettingFilename);
+	FromSettingFile.open(from);
 	if(FromSettingFile.fail())
 	{
 		_isOpen = false;
@@ -70,34 +67,34 @@ dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_FROM";
-		SettingFilename = SettingFilename_oss.str();
+		to = SettingFilename_oss.str();
 		break;
 
 	case DIR_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_TO";
-		SettingFilename = SettingFilename_oss.str();
+		to = SettingFilename_oss.str();
 		break;
 
 	case FILE_FROM:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_FROM";
-		SettingFilename = SettingFilename_oss.str();
+		to = SettingFilename_oss.str();
 		break;
 
 	case FILE_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_TO";
-		SettingFilename = SettingFilename_oss.str();
+		to = SettingFilename_oss.str();
 		break;
 	}
 
 	wifstream ToSettingFile;
 	ToSettingFile.imbue(locale(""));
-	ToSettingFile.open(SettingFilename);
+	ToSettingFile.open(to);
 	if(ToSettingFile.fail())
 	{
 		_isOpen = false;
