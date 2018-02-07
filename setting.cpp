@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <locale>
+#include <cstddef>
 
 // header
 #include "class.h"
@@ -122,4 +123,14 @@ bool dfs-backupper::setting::clear()
 	to_vector.clear();
 
 	return true;
+}
+
+void dfs-backupper::setting::list()
+{
+	size_t element_number = from_vector.size();
+	for(unsigned int i = 0; i < element_number; i++)
+		wcout	<< from_vector[i]
+			<< L" -> "
+			<< to_vector[i]
+			<< L'\n';
 }
