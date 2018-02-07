@@ -13,7 +13,7 @@ namespace dfs-backupper
 	class setting
 	{
 	public:
-		setting(SettingFile from, SettingFile to);
+		setting(SettingFile _from, SettingFile _to);
 		bool isOpen() { return _isOpen; }
 		bool clear();
 		void list();
@@ -21,6 +21,8 @@ namespace dfs-backupper
 		void run();
 
 	private:
+		SettingFile from;
+		SettingFile to;
 		std::vector<std::wstring> from_vector;
 		std::vector<std::wstring> to_vector;
 		bool _isOpen;

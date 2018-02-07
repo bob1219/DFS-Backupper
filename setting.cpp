@@ -12,12 +12,14 @@
 // using
 using namespace std;
 
-dfs-backupper::setting::setting(SettingFile from, SettingFile to)
+dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
+:	from(_from),
+	to(_to)
 {
-	// read from setting file
+	// read _from setting file
 	wstring SettingFilename;
 	wostringstream SettingFilename_oss;
-	switch(from)
+	switch(_from)
 	{
 	case DIR_FROM:
 		SettingFilename_oss	<< L'.'
@@ -61,8 +63,8 @@ dfs-backupper::setting::setting(SettingFile from, SettingFile to)
 	while(getline(FromSettingFile, FromFile))
 		from_vector.push_back(FromFile);
 
-	// read to setting file
-	switch(to)
+	// read _to setting file
+	switch(_to)
 	{
 	case DIR_FROM:
 		SettingFilename_oss	<< L'.'
@@ -105,4 +107,6 @@ dfs-backupper::setting::setting(SettingFile from, SettingFile to)
 	wstring ToFile;
 	while(getline(ToSettingFile, ToFile))
 		to_vector.push_back(ToFile);
+
+	_isOpen = true;
 }
