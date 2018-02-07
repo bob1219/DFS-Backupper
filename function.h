@@ -13,7 +13,7 @@ namespace dfs-backupper
 	{
 		bool clear();
 		bool list();
-		bool add(const std::wstring& option, std::wstring& from, std::wstring& to);
+		bool add(const std::wstring& option, const std::wstring& from, const std::wstring& to);
 		bool run();
 	}
 }
