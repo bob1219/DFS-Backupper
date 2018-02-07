@@ -107,3 +107,19 @@ dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
 
 	_isOpen = true;
 }
+
+bool dfs-backupper::setting::clear()
+{
+	wofstream FromFile(from);
+	if(FromFile.fail())
+		return false;
+
+	wofstream ToFile(to);
+	if(ToFile.fail())
+		return false;
+
+	from_vector.clear();
+	to_vector.clear();
+
+	return true;
+}
