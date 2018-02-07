@@ -143,3 +143,26 @@ void dfs-backupper::setting::add(const wstring& from, const wstring& to)
 	if(!write())
 		throw dfs-backupper::exception("cannot open file");
 }
+
+bool dfs-backupper::setting::write()
+{
+	wofstream FromSettingFile;
+	FromSettingFile.imbue(locale(""));
+	FromSettingFile.open(from);
+	if(FromSettingFile.fail())
+		return false;
+
+	wofstream ToSettingFile;
+	ToSettingFile.imbue(locale(""));
+	ToSettingFile.open(to);
+	if(ToSettingFile.fail())
+		return false;
+
+	for(wstring setting: from_vector)
+		FromSettingFile << setting << L'\n';
+
+	for(wstring setting: to_vector)
+		ToSettingFile << setting << L'\n';
+
+	return true;
+}
