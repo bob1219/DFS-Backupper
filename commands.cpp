@@ -15,17 +15,17 @@ using namespace std;
 
 bool dfs-backupper::command::clear()
 {
-	setting DirSetting(DIR_FROM, DIR_TO);
-	if(!DirSetting.isOpen())
+	setting dirSetting(DIR_FROM, DIR_TO);
+	if(!dirSetting.isOpen())
 		return false;
 
-	setting FileSetting(FILE_FROM, FILE_TO);
-	if(!FileSetting.isOpen())
+	setting fileSetting(FILE_FROM, FILE_TO);
+	if(!fileSetting.isOpen())
 		return false;
 
-	if(!DirSetting.clear())
+	if(!dirSetting.clear())
 		return false;
-	if(!FileSetting.clear())
+	if(!fileSetting.clear())
 		return false;
 
 	return true;
@@ -33,21 +33,21 @@ bool dfs-backupper::command::clear()
 
 bool dfs-backupper::command::list()
 {
-	setting DirSetting(DIR_FROM, DIR_TO);
-	if(!DirSetting.isOpen())
+	setting dirSetting(DIR_FROM, DIR_TO);
+	if(!dirSetting.isOpen())
 		return false;
 
-	setting FileSetting(FILE_FROM, FILE_TO);
-	if(!FileSetting.isOpen())
+	setting fileSetting(FILE_FROM, FILE_TO);
+	if(!fileSetting.isOpen())
 		return false;
 
 	wcout << L"directory:\n";
-	DirSetting.list();
+	dirSetting.list();
 
 	wcout << L'\n';
 
 	wcout << L"file:\n";
-	FileSetting.list();
+	fileSetting.list();
 
 	return true;
 }
@@ -56,22 +56,22 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 {
 	if(option == L"-d")
 	{
-		setting DirSetting(DIR_FROM, DIR_TO);
-		if(!DirSetting.isOpen())
+		setting dirSetting(DIR_FROM, DIR_TO);
+		if(!dirSetting.isOpen())
 			return false;
 
-		if(!DirSetting.add(from, to))
+		if(!dirSetting.add(from, to))
 			return false;
 
 		return true;
 	}
 	else if(option == L"-f")
 	{
-		setting FileSetting(FILE_FROM, FILE_TO);
-		if(!FileSetting.isOpen())
+		setting fileSetting(FILE_FROM, FILE_TO);
+		if(!fileSetting.isOpen())
 			return false;
 
-		if(!FileSetting.add(from, to))
+		if(!fileSetting.add(from, to))
 			return false;
 
 		return true;
@@ -81,16 +81,16 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 
 bool dfs-backupper::command::run()
 {
-	setting DirSetting(DIR_FROM, DIR_TO);
-	if(!DirSetting.isOpen())
+	setting dirSetting(DIR_FROM, DIR_TO);
+	if(!dirSetting.isOpen())
 		return false;
 
-	setting FileSetting(FILE_FROM, FILE_TO);
-	if(!FileSetting.isOpen())
+	setting fileSetting(FILE_FROM, FILE_TO);
+	if(!fileSetting.isOpen())
 		return false;
 
-	DirSetting.run();
-	FileSetting.run();
+	dirSetting.run();
+	fileSetting.run();
 
 	return true;
 }

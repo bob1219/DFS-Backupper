@@ -18,9 +18,9 @@ namespace dfs-backupper
 		bool clear();
 		void list();
 		void add(const std::wstring& from, const std::wstring& to);
-		void run();
+		virtual void run() = 0;
 
-	private:
+	protected:
 		wstring from;
 		wstring to;
 		std::vector<std::wstring> from_vector;
@@ -28,6 +28,18 @@ namespace dfs-backupper
 		bool _isOpen;
 		bool write();
 	};
+
+	class DirSetting : public setting
+	{
+	public:
+		void run();
+	}
+
+	class FileSetting : public setting
+	{
+	public:
+		void run();
+	}
 
 	class exception
 	{
