@@ -17,11 +17,12 @@ bool dfs-backupper::command::clear()
 	setting DirSetting(DIR_FROM, DIR_TO);
 	if(!DirSetting.isOpen())
 		return false;
-	if(!DirSetting.clear())
-		return false;
 
 	setting FileSetting(FILE_FROM, FILE_TO);
 	if(!FileSetting.isOpen())
+		return false;
+
+	if(!DirSetting.clear())
 		return false;
 	if(!FileSetting.clear())
 		return false;
