@@ -1,0 +1,9 @@
+*.txt
+
+DIR-FROM
+DIR-TO
+FILE-FROM
+FILE-TO
+
+makefile
+*.obj
