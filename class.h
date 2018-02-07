@@ -45,7 +45,7 @@ namespace dfs-backupper
 	{
 	public:
 		exception(const std::wstring& message);
-		const std::wstring& getMessage();
+		const std::wstring& getMessage() { return message; }
 
 	private:
 		std::wstring message;
