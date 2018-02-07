@@ -31,32 +31,20 @@ bool dfs-backupper::command::clear()
 
 bool dfs-backupper::command::list()
 {
-	wcout << L"directory:\n";
-	wostringstream DirFromFilename;
-	DirFromFilename	<< L'.'
-			<< PATH_BREAK_CHARACTER
-			<< L"DIR_FROM";
-	wostringstream DirToFilename;
-	DirToFilename	<< L'.'
-			<< PATH_BREAK_CHARACTER
-			<< L"DIR_TO";
-	setting DirSetting(DirFromFilename.str(), DirToFilename.str());
+	setting DirSetting(DIR_FROM, DIR_TO);
 	if(!DirSetting.isOpen())
 		return false;
-	DirSetting.list();
 
-	wcout << L"file:\n";
-	wostringstream FileFromFilename;
-	FileFromFilename	<< L'.'
-				<< PATH_BREAK_CHARACTER
-				<< L"FILE_FROM";
-	wostringstream FileToFilename;
-	FileToFilename	<< L'.'
-			<< PATH_BREAK_CHARACTER
-			<< L"FILE_TO";
-	setting FileSetting(FileFromFilename.str(), FileToFilename.str());
+	setting FileSetting(FILE_FROM, FILE_TO);
 	if(!FileSetting.isOpen())
 		return false;
+
+	wcout << L"directory:\n";
+	DirSetting.list();
+
+	wcout << L'\n';
+
+	wcout << L"file:\n";
 	FileSetting.list();
 
 	return true;
