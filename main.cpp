@@ -12,17 +12,12 @@
 
 // header
 #include "function.h"
+#include "class.h"
 
 // using
 using namespace std;
 using namespace dfs-backupper;
 using namespace boost::system;
-
-// declaration
-namespace dfs-backupper
-{
-	class exception;
-}
 
 int wmain(int argc, wchar_t** argv)
 {
@@ -54,26 +49,40 @@ int wmain(int argc, wchar_t** argv)
 	}
 	catch(system_error& e)
 	{
-		const char* mess_c = e.what();
-		wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-		mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
+		try
+		{
+			const char* mess_c = e.what();
+			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
+			mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
 
-		wcerr << L"error type:\tboost\n";
-		wcerr << L"error code:\t" << e.code().value() << L'\n';
-		wcerr << L"error message:\t" << mess << L'\n';
+			wcerr << L"error type:\tboost\n";
+			wcerr << L"error code:\t" << e.code().value() << L'\n';
+			wcerr << L"error message:\t" << mess << L'\n';
 
-		delete [] mess;
+			delete [] mess;
+		}
+		catch(...)
+		{
+			terminate();
+		}
 	}
 	catch(std::exception& e)
 	{
-		const char* mess_c = e.what();
-		wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-		mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
+		try
+		{
+			const char* mess_c = e.what();
+			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
+			mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
 
-		wcerr << L"error type:\tstandard\n";
-		wcerr << L"error message:\t" << mess << L'\n';
+			wcerr << L"error type:\tstandard\n";
+			wcerr << L"error message:\t" << mess << L'\n';
 
-		delete [] mess;
+			delete [] mess;
+		}
+		catch(...)
+		{
+			terminate();
+		}
 	}
 	catch(dfs-backupper::exception& e)
 	{
