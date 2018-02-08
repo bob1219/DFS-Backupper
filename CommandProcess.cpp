@@ -4,15 +4,10 @@
 
 // header
 #include "function.h"
+#include "class.h"
 
 // using
 using namespace std;
-
-// declaration
-namespace dfs-backupper
-{
-	class exception;
-}
 
 bool dfs-backupper::CommandProcess(int argc, const vector<wstring>& args)
 {
