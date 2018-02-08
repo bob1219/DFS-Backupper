@@ -8,17 +8,10 @@
 // header
 #include "function.h"
 #include "constant.h"
+#include "class.h"
 
 // using
 using namespace std;
-
-// declaration
-namespace dfs-backupper
-{
-	class DirSetting;
-	class FileSetting;
-	class exception;
-}
 
 bool dfs-backupper::command::clear()
 {
