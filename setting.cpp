@@ -13,50 +13,44 @@
 // using
 using namespace std;
 
-// declaration
-namespace dfs-backupper
+dfs-backupper::setting::setting(SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
-	class exception;
-}
-
-dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
-{
-	// read _from setting file
+	// read FromSettingFile setting file
 	wostringstream SettingFilename_oss;
-	switch(_from)
+	switch(FromSettingFile)
 	{
 	case DIR_FROM:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_FROM";
-		from = SettingFilename_oss.str();
+		FromSettingFilename = SettingFilename_oss.str();
 		break;
 
 	case DIR_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_TO";
-		from = SettingFilename_oss.str();
+		FromSettingFilename = SettingFilename_oss.str();
 		break;
 
 	case FILE_FROM:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_FROM";
-		from = SettingFilename_oss.str();
+		FromSettingFilename = SettingFilename_oss.str();
 		break;
 
 	case FILE_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_TO";
-		from = SettingFilename_oss.str();
+		FromSettingFilename = SettingFilename_oss.str();
 		break;
 	}
 
 	wifstream FromSettingFile;
 	FromSettingFile.imbue(locale(""));
-	FromSettingFile.open(from);
+	FromSettingFile.open(FromSettingFilename);
 	if(FromSettingFile.fail())
 	{
 		_isOpen = false;
@@ -65,43 +59,43 @@ dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
 
 	wstring FromFile;
 	while(getline(FromSettingFile, FromFile))
-		from_vector.push_back(FromFile);
+		FromFiles.push_back(FromFile);
 
-	// read _to setting file
-	switch(_to)
+	// read ToSettingFile setting file
+	switch(ToSettingFile)
 	{
 	case DIR_FROM:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_FROM";
-		to = SettingFilename_oss.str();
+		ToSettingFilename = SettingFilename_oss.str();
 		break;
 
 	case DIR_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_TO";
-		to = SettingFilename_oss.str();
+		ToSettingFilename = SettingFilename_oss.str();
 		break;
 
 	case FILE_FROM:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_FROM";
-		to = SettingFilename_oss.str();
+		ToSettingFilename = SettingFilename_oss.str();
 		break;
 
 	case FILE_TO:
 		SettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_TO";
-		to = SettingFilename_oss.str();
+		ToSettingFilename = SettingFilename_oss.str();
 		break;
 	}
 
 	wifstream ToSettingFile;
 	ToSettingFile.imbue(locale(""));
-	ToSettingFile.open(to);
+	ToSettingFile.open(ToSettingFilename);
 	if(ToSettingFile.fail())
 	{
 		_isOpen = false;
@@ -110,41 +104,41 @@ dfs-backupper::setting::setting(SettingFile _from, SettingFile _to)
 
 	wstring ToFile;
 	while(getline(ToSettingFile, ToFile))
-		to_vector.push_back(ToFile);
+		ToFiles.push_back(ToFile);
 
 	_isOpen = true;
 }
 
 bool dfs-backupper::setting::clear()
 {
-	wofstream FromFile(from);
+	wofstream FromFile(FromSettingFilename);
 	if(FromFile.fail())
 		return false;
 
-	wofstream ToFile(to);
+	wofstream ToFile(ToSettingFilename);
 	if(ToFile.fail())
 		return false;
 
-	from_vector.clear();
-	to_vector.clear();
+	FromFiles.clear();
+	ToFiles.clear();
 
 	return true;
 }
 
 void dfs-backupper::setting::list()
 {
-	size_t element_number = from_vector.size();
+	size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
-		wcout	<< from_vector[i]
+		wcout	<< FromFiles[i]
 			<< L" -> "
-			<< to_vector[i]
+			<< ToFiles[i]
 			<< L'\n';
 }
 
-void dfs-backupper::setting::add(const wstring& from, const wstring& to)
+void dfs-backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
 {
-	from_vector.push_back(from);
-	to_vector.push_back(to);
+	FromFiles.push_back(FromSettingFilename);
+	ToFiles.push_back(ToSettingFilename);
 
 	if(!write())
 		throw dfs-backupper::exception("cannot open file");
@@ -154,20 +148,20 @@ bool dfs-backupper::setting::write()
 {
 	wofstream FromSettingFile;
 	FromSettingFile.imbue(locale(""));
-	FromSettingFile.open(from);
+	FromSettingFile.open(FromSettingFilename);
 	if(FromSettingFile.fail())
 		return false;
 
 	wofstream ToSettingFile;
 	ToSettingFile.imbue(locale(""));
-	ToSettingFile.open(to);
+	ToSettingFile.open(ToSettingFilename);
 	if(ToSettingFile.fail())
 		return false;
 
-	for(wstring setting: from_vector)
+	for(wstring setting: FromFiles)
 		FromSettingFile << setting << L'\n';
 
-	for(wstring setting: to_vector)
+	for(wstring setting: ToFiles)
 		ToSettingFile << setting << L'\n';
 
 	return true;
