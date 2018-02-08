@@ -12,7 +12,7 @@ using namespace std;
 
 void dfs-backupper::FileSetting::run()
 {
-	size_t element_number = from_vector.size();
+	size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
-		copy_directory(from_vector[i], to_vector[i], overwrite_if_exists);
+		copy_directory(FromFiles[i], ToFiles[i], overwrite_if_exists);
 }
