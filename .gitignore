@@ -1,9 +1,9 @@
 *.txt
 
-DIR-FROM
-DIR-TO
-FILE-FROM
-FILE-TO
+DIR_FROM
+DIR_TO
+FILE_FROM
+FILE_TO
 
 makefile
 *.obj
