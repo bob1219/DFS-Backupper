@@ -7,3 +7,5 @@ FILE-TO
 
 makefile
 *.obj
+
+*.lib
