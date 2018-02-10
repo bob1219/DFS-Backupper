@@ -9,7 +9,7 @@
 // using
 using namespace std;
 
-bool dfs-backupper::CommandProcess(int argc, const vector<wstring>& args)
+bool dfs_backupper::CommandProcess(int argc, const vector<wstring>& args)
 {
 	if(args[1] == L"clear")
 	{
@@ -35,5 +35,5 @@ bool dfs-backupper::CommandProcess(int argc, const vector<wstring>& args)
 			return false;
 		return command::run();
 	}
-	else throw dfs-backupper::exception(L"unknown command");
+	else throw dfs_backupper::exception(L"unknown command");
 }

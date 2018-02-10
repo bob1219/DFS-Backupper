@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-namespace dfs-backupper
+namespace dfs_backupper
 {
 	bool CommandProcess(int argc, const std::vector<std::wstring>& args);
 

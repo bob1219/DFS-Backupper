@@ -16,8 +16,7 @@
 
 // using
 using namespace std;
-using namespace dfs-backupper;
-using namespace boost::system;
+using namespace dfs_backupper;
 
 int wmain(int argc, wchar_t** argv)
 {
@@ -36,8 +35,8 @@ int wmain(int argc, wchar_t** argv)
 		}
 
 		vector<wstring> args;
-		for(wchar_t* arg: argv)
-			args.push_back(arg);
+		for(unsigned int i = 0; i < argc; i++)
+			args.push_back(argv[i]);
 
 		if(CommandProcess(argc, args))
 			return EXIT_SUCCESS;
@@ -47,7 +46,7 @@ int wmain(int argc, wchar_t** argv)
 			return EXIT_FAILURE;
 		}
 	}
-	catch(system_error& e)
+	catch(boost::system::system_error& e)
 	{
 		try
 		{
@@ -84,7 +83,7 @@ int wmain(int argc, wchar_t** argv)
 			terminate();
 		}
 	}
-	catch(dfs-backupper::exception& e)
+	catch(dfs_backupper::exception& e)
 	{
 		wcerr << L"error type:\tDFS-Backupper\n";
 		wcerr << L"error message:\t" << e.getMessage() << L'\n';

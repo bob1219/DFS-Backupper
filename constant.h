@@ -1,7 +1,7 @@
 #ifndef _CONSTANT_H_
 #define _CONSTANT_H_
 
-namespace dfs-backupper
+namespace dfs_backupper
 {
 	enum SettingFile
 	{

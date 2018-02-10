@@ -13,7 +13,7 @@
 // using
 using namespace std;
 
-bool dfs-backupper::command::clear()
+bool dfs_backupper::command::clear()
 {
 	DirSetting dirSetting(DIR_FROM, DIR_TO);
 	if(!dirSetting.isOpen())
@@ -31,7 +31,7 @@ bool dfs-backupper::command::clear()
 	return true;
 }
 
-bool dfs-backupper::command::list()
+bool dfs_backupper::command::list()
 {
 	DirSetting dirSetting(DIR_FROM, DIR_TO);
 	if(!dirSetting.isOpen())
@@ -52,7 +52,7 @@ bool dfs-backupper::command::list()
 	return true;
 }
 
-bool dfs-backupper::command::add(const wstring& option, const wstring& from, const wstring& to)
+bool dfs_backupper::command::add(const wstring& option, const wstring& from, const wstring& to)
 {
 	if(option == L"-d")
 	{
@@ -60,8 +60,7 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 		if(!dirSetting.isOpen())
 			return false;
 
-		if(!dirSetting.add(from, to))
-			return false;
+		dirSetting.add(from, to);
 
 		return true;
 	}
@@ -71,15 +70,14 @@ bool dfs-backupper::command::add(const wstring& option, const wstring& from, con
 		if(!fileSetting.isOpen())
 			return false;
 
-		if(!fileSetting.add(from, to))
-			return false;
+		fileSetting.add(from, to);
 
 		return true;
 	}
-	else throw dfs-backupper::exception("unknown option");
+	else throw dfs_backupper::exception(L"unknown option");
 }
 
-bool dfs-backupper::command::run()
+bool dfs_backupper::command::run()
 {
 	DirSetting dirSetting(DIR_FROM, DIR_TO);
 	if(!dirSetting.isOpen())

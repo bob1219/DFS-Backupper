@@ -13,7 +13,7 @@
 // using
 using namespace std;
 
-dfs-backupper::setting::setting(SettingFile FromSettingFile, SettingFile ToSettingFile)
+void dfs_backupper::setting::open(SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
 	// read FromSettingFile setting file
 	wostringstream SettingFilename_oss;
@@ -48,20 +48,20 @@ dfs-backupper::setting::setting(SettingFile FromSettingFile, SettingFile ToSetti
 		break;
 	}
 
-	wifstream FromSettingFile;
-	FromSettingFile.imbue(locale(""));
-	FromSettingFile.open(FromSettingFilename);
-	if(FromSettingFile.fail())
+	wifstream FromSettingFile_ifs;
+	FromSettingFile_ifs.imbue(locale(""));
+	FromSettingFile_ifs.open(FromSettingFilename);
+	if(FromSettingFile_ifs.fail())
 	{
 		_isOpen = false;
 		return;
 	}
 
 	wstring FromFile;
-	while(getline(FromSettingFile, FromFile))
+	while(getline(FromSettingFile_ifs, FromFile))
 		FromFiles.push_back(FromFile);
 
-	// read ToSettingFile setting file
+	// read ToSettingFile_ifs setting file
 	switch(ToSettingFile)
 	{
 	case DIR_FROM:
@@ -93,23 +93,23 @@ dfs-backupper::setting::setting(SettingFile FromSettingFile, SettingFile ToSetti
 		break;
 	}
 
-	wifstream ToSettingFile;
-	ToSettingFile.imbue(locale(""));
-	ToSettingFile.open(ToSettingFilename);
-	if(ToSettingFile.fail())
+	wifstream ToSettingFile_ifs;
+	ToSettingFile_ifs.imbue(locale(""));
+	ToSettingFile_ifs.open(ToSettingFilename);
+	if(ToSettingFile_ifs.fail())
 	{
 		_isOpen = false;
 		return;
 	}
 
 	wstring ToFile;
-	while(getline(ToSettingFile, ToFile))
+	while(getline(ToSettingFile_ifs, ToFile))
 		ToFiles.push_back(ToFile);
 
 	_isOpen = true;
 }
 
-bool dfs-backupper::setting::clear()
+bool dfs_backupper::setting::clear()
 {
 	wofstream FromFile(FromSettingFilename);
 	if(FromFile.fail())
@@ -125,7 +125,7 @@ bool dfs-backupper::setting::clear()
 	return true;
 }
 
-void dfs-backupper::setting::list()
+void dfs_backupper::setting::list()
 {
 	size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
@@ -135,16 +135,16 @@ void dfs-backupper::setting::list()
 			<< L'\n';
 }
 
-void dfs-backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
+void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
 {
 	FromFiles.push_back(FromSettingFilename);
 	ToFiles.push_back(ToSettingFilename);
 
 	if(!write())
-		throw dfs-backupper::exception("cannot open file");
+		throw dfs_backupper::exception(L"cannot open file");
 }
 
-bool dfs-backupper::setting::write()
+bool dfs_backupper::setting::write()
 {
 	wofstream FromSettingFile;
 	FromSettingFile.imbue(locale(""));
