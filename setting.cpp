@@ -16,97 +16,70 @@ using namespace std;
 void dfs_backupper::setting::open(SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
 	// read FromSettingFile setting file
-	wostringstream SettingFilename_oss;
+	wostringstream FromSettingFilename_oss;
 	switch(FromSettingFile)
 	{
 	case DIR_FROM:
-		SettingFilename_oss	<< L'.'
+		FromSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_FROM";
-		FromSettingFilename = SettingFilename_oss.str();
+		FromSettingFilename = FromSettingFilename_oss.str();
 		break;
 
 	case DIR_TO:
-		SettingFilename_oss	<< L'.'
+		FromSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_TO";
-		FromSettingFilename = SettingFilename_oss.str();
+		FromSettingFilename = FromSettingFilename_oss.str();
 		break;
 
 	case FILE_FROM:
-		SettingFilename_oss	<< L'.'
+		FromSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_FROM";
-		FromSettingFilename = SettingFilename_oss.str();
+		FromSettingFilename = FromSettingFilename_oss.str();
 		break;
 
 	case FILE_TO:
-		SettingFilename_oss	<< L'.'
+		FromSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_TO";
-		FromSettingFilename = SettingFilename_oss.str();
+		FromSettingFilename = FromSettingFilename_oss.str();
 		break;
 	}
 
-	wifstream FromSettingFile_ifs;
-	FromSettingFile_ifs.imbue(locale(""));
-	FromSettingFile_ifs.open(FromSettingFilename);
-	if(FromSettingFile_ifs.fail())
-	{
-		_isOpen = false;
-		return;
-	}
-
-	wstring FromFile;
-	while(getline(FromSettingFile_ifs, FromFile))
-		FromFiles.push_back(FromFile);
-
 	// read ToSettingFile_ifs setting file
+	wostringstream ToSettingFilename_oss;
 	switch(ToSettingFile)
 	{
 	case DIR_FROM:
-		SettingFilename_oss	<< L'.'
+		ToSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_FROM";
-		ToSettingFilename = SettingFilename_oss.str();
+		ToSettingFilename = ToSettingFilename_oss.str();
 		break;
 
 	case DIR_TO:
-		SettingFilename_oss	<< L'.'
+		ToSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"DIR_TO";
-		ToSettingFilename = SettingFilename_oss.str();
+		ToSettingFilename = ToSettingFilename_oss.str();
 		break;
 
 	case FILE_FROM:
-		SettingFilename_oss	<< L'.'
+		ToSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_FROM";
-		ToSettingFilename = SettingFilename_oss.str();
+		ToSettingFilename = ToSettingFilename_oss.str();
 		break;
 
 	case FILE_TO:
-		SettingFilename_oss	<< L'.'
+		ToSettingFilename_oss	<< L'.'
 					<< PATH_BREAK_CHARACTER
 					<< L"FILE_TO";
-		ToSettingFilename = SettingFilename_oss.str();
+		ToSettingFilename = ToSettingFilename_oss.str();
 		break;
 	}
-
-	wifstream ToSettingFile_ifs;
-	ToSettingFile_ifs.imbue(locale(""));
-	ToSettingFile_ifs.open(ToSettingFilename);
-	if(ToSettingFile_ifs.fail())
-	{
-		_isOpen = false;
-		return;
-	}
-
-	wstring ToFile;
-	while(getline(ToSettingFile_ifs, ToFile))
-		ToFiles.push_back(ToFile);
-
-	_isOpen = true;
 }
 
 bool dfs_backupper::setting::clear()
@@ -165,4 +138,27 @@ bool dfs_backupper::setting::write()
 		ToSettingFile << setting << L'\n';
 
 	return true;
+}
+
+bool dfs_backupper::setting::read()
+{
+	wifstream FromSettingFile_ifs;
+	FromSettingFile_ifs.imbue(locale(""));
+	FromSettingFile_ifs.open(FromSettingFilename);
+	if(FromSettingFile_ifs.fail())
+		return false;
+
+	wstring FromFile;
+	while(getline(FromSettingFile_ifs, FromFile))
+		FromFiles.push_back(FromFile);
+
+	wifstream ToSettingFile_ifs;
+	ToSettingFile_ifs.imbue(locale(""));
+	ToSettingFile_ifs.open(ToSettingFilename);
+	if(ToSettingFile_ifs.fail())
+		return false;
+
+	wstring ToFile;
+	while(getline(ToSettingFile_ifs, ToFile))
+		ToFiles.push_back(ToFile);
 }

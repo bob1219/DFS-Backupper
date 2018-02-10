@@ -16,12 +16,7 @@ using namespace std;
 bool dfs_backupper::command::clear()
 {
 	DirSetting dirSetting(DIR_FROM, DIR_TO);
-	if(!dirSetting.isOpen())
-		return false;
-
 	FileSetting fileSetting(FILE_FROM, FILE_TO);
-	if(!fileSetting.isOpen())
-		return false;
 
 	if(!dirSetting.clear())
 		return false;
@@ -34,11 +29,11 @@ bool dfs_backupper::command::clear()
 bool dfs_backupper::command::list()
 {
 	DirSetting dirSetting(DIR_FROM, DIR_TO);
-	if(!dirSetting.isOpen())
+	if(!dirSetting.read())
 		return false;
 
 	FileSetting fileSetting(FILE_FROM, FILE_TO);
-	if(!fileSetting.isOpen())
+	if(!fileSetting.read())
 		return false;
 
 	wcout << L"directory:\n";
@@ -57,7 +52,7 @@ bool dfs_backupper::command::add(const wstring& option, const wstring& from, con
 	if(option == L"-d")
 	{
 		DirSetting dirSetting(DIR_FROM, DIR_TO);
-		if(!dirSetting.isOpen())
+		if(!dirSetting.read())
 			return false;
 
 		dirSetting.add(from, to);
@@ -67,7 +62,7 @@ bool dfs_backupper::command::add(const wstring& option, const wstring& from, con
 	else if(option == L"-f")
 	{
 		FileSetting fileSetting(FILE_FROM, FILE_TO);
-		if(!fileSetting.isOpen())
+		if(!fileSetting.read())
 			return false;
 
 		fileSetting.add(from, to);
@@ -80,11 +75,11 @@ bool dfs_backupper::command::add(const wstring& option, const wstring& from, con
 bool dfs_backupper::command::run()
 {
 	DirSetting dirSetting(DIR_FROM, DIR_TO);
-	if(!dirSetting.isOpen())
+	if(!dirSetting.read())
 		return false;
 
 	FileSetting fileSetting(FILE_FROM, FILE_TO);
-	if(!fileSetting.isOpen())
+	if(!fileSetting.read())
 		return false;
 
 	dirSetting.run();

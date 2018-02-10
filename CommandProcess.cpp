@@ -1,6 +1,7 @@
 // standard library
 #include <vector>
 #include <string>
+#include <iostream>
 
 // header
 #include "function.h"

@@ -14,7 +14,7 @@ namespace dfs_backupper
 	{
 	public:
 		void open(SettingFile FromSettingFile, SettingFile ToSettingFile);
-		bool isOpen() { return _isOpen; }
+		bool read();
 		bool clear();
 		void list();
 		void add(const std::wstring& from, const std::wstring& to);
@@ -23,7 +23,6 @@ namespace dfs_backupper
 	private:
 		std::wstring FromSettingFilename;
 		std::wstring ToSettingFilename;
-		bool _isOpen;
 		bool write();
 
 	protected:
