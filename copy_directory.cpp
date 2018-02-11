@@ -35,7 +35,7 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			if(*i != L'"')
 				filename += *i;
 
-		wstring ToFile = wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename;
+		wstring ToFile = (wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str();
 
 		if(is_regular_file(p))
 		{
@@ -52,7 +52,7 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			wcout << wformat(L"succeeded:\t%1% -> %2%\n") % p.wstring() % ToFile;
 		}
 		else
-			dfs_backupper::copy_directory(p.wstring(), ToFile.str());
+			dfs_backupper::copy_directory(p.wstring(), ToFile);
 
 	loop_end:;
 	}

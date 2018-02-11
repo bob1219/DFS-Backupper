@@ -23,19 +23,19 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingFile FromS
 	switch(FromSettingFile)
 	{
 	case DIR_FROM:
-		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name;
+		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case DIR_TO:
-		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name;
+		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case FILE_FROM:
-		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name;
+		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case FILE_TO:
-		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name;
+		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 	}
 
@@ -43,19 +43,19 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingFile FromS
 	switch(ToSettingFile)
 	{
 	case DIR_FROM:
-		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name;
+		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case DIR_TO:
-		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name;
+		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case FILE_FROM:
-		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name;
+		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case FILE_TO:
-		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name;
+		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 	}
 }
@@ -136,4 +136,6 @@ bool dfs_backupper::setting::read()
 	wstring ToFile;
 	while(getline(ToSettingFile_ifs, ToFile))
 		ToFiles.push_back(ToFile);
+
+	return true;
 }
