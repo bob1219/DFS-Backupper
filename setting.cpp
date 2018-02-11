@@ -6,78 +6,56 @@
 #include <locale>
 #include <cstddef>
 
+// boost
+#include <boost/format.hpp>
+
 // header
 #include "class.h"
 #include "constant.h"
 
 // using
 using namespace std;
+using namespace boost;
 
 void dfs_backupper::setting::open(SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
 	// read FromSettingFile setting file
-	wostringstream FromSettingFilename_oss;
 	switch(FromSettingFile)
 	{
 	case DIR_FROM:
-		FromSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"DIR_FROM";
-		FromSettingFilename = FromSettingFilename_oss.str();
+		FromSettingFilename = wformat(L".%1%DIR_FROM") % PATH_BREAK_CHARACTER;
 		break;
 
 	case DIR_TO:
-		FromSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"DIR_TO";
-		FromSettingFilename = FromSettingFilename_oss.str();
+		FromSettingFilename = wformat(L".%1%DIR_TO") % PATH_BREAK_CHARACTER;
 		break;
 
 	case FILE_FROM:
-		FromSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"FILE_FROM";
-		FromSettingFilename = FromSettingFilename_oss.str();
+		FromSettingFilename = wformat(L".%1%FILE_FROM") % PATH_BREAK_CHARACTER;
 		break;
 
 	case FILE_TO:
-		FromSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"FILE_TO";
-		FromSettingFilename = FromSettingFilename_oss.str();
+		FromSettingFilename = wformat(L".%1%FILE_TO") % PATH_BREAK_CHARACTER;
 		break;
 	}
 
 	// read ToSettingFile_ifs setting file
-	wostringstream ToSettingFilename_oss;
 	switch(ToSettingFile)
 	{
 	case DIR_FROM:
-		ToSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"DIR_FROM";
-		ToSettingFilename = ToSettingFilename_oss.str();
+		ToSettingFilename = wformat(L".%1%DIR_FROM") % PATH_BREAK_CHARACTER;
 		break;
 
 	case DIR_TO:
-		ToSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"DIR_TO";
-		ToSettingFilename = ToSettingFilename_oss.str();
+		ToSettingFilename = wformat(L".%1%DIR_TO") % PATH_BREAK_CHARACTER;
 		break;
 
 	case FILE_FROM:
-		ToSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"FILE_FROM";
-		ToSettingFilename = ToSettingFilename_oss.str();
+		ToSettingFilename = wformat(L".%1%FILE_FROM") % PATH_BREAK_CHARACTER;
 		break;
 
 	case FILE_TO:
-		ToSettingFilename_oss	<< L'.'
-					<< PATH_BREAK_CHARACTER
-					<< L"FILE_TO";
-		ToSettingFilename = ToSettingFilename_oss.str();
+		ToSettingFilename = wformat(L".%1%FILE_TO") % PATH_BREAK_CHARACTER;
 		break;
 	}
 }
