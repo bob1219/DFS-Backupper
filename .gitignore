@@ -1,0 +1,11 @@
+*.txt
+
+DIR_FROM
+DIR_TO
+FILE_FROM
+FILE_TO
+
+makefile
+*.obj
+
+*.lib
