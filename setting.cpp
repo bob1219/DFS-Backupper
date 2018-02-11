@@ -80,10 +80,7 @@ void dfs_backupper::setting::list()
 {
 	size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
-		wcout	<< FromFiles[i]
-			<< L" -> "
-			<< ToFiles[i]
-			<< L'\n';
+		wcout << wformat(L"%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
 }
 
 void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
