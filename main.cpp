@@ -52,7 +52,7 @@ int wmain(int argc, wchar_t** argv)
 		{
 			const char* mess_c = e.what();
 			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-			mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
+			mbstowcs(mess, mess_c, strlen(mess_c));
 
 			wcerr << L"error type:\tboost\n";
 			wcerr << L"error code:\t" << e.code().value() << L'\n';
@@ -71,7 +71,7 @@ int wmain(int argc, wchar_t** argv)
 		{
 			const char* mess_c = e.what();
 			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-			mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
+			mbstowcs(mess, mess_c, strlen(mess_c));
 
 			wcerr << L"error type:\tstandard\n";
 			wcerr << L"error message:\t" << mess << L'\n';
