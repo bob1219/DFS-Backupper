@@ -9,3 +9,6 @@ makefile
 *.obj
 
 *.lib
+
+settings/*
+!.gitkeep

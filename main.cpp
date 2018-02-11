@@ -9,6 +9,7 @@
 
 // boost
 #include <boost/system/system_error.hpp>
+#include <boost/format.hpp>
 
 // header
 #include "function.h"
@@ -17,6 +18,7 @@
 // using
 using namespace std;
 using namespace dfs_backupper;
+using namespace boost;
 
 int wmain(int argc, wchar_t** argv)
 {
@@ -28,9 +30,7 @@ int wmain(int argc, wchar_t** argv)
 
 		if(argc == 1)
 		{
-			wcerr	<< L"usage: "
-				<< argv[0]
-				<< L" [command] <arguments>\n";
+			wcerr << wformat(L"usage: %1% [command] <arguments>\n") % argv[0];
 			return EXIT_FAILURE;
 		}
 
@@ -55,8 +55,8 @@ int wmain(int argc, wchar_t** argv)
 			mbstowcs(mess, mess_c, strlen(mess_c));
 
 			wcerr << L"error type:\tboost\n";
-			wcerr << L"error code:\t" << e.code().value() << L'\n';
-			wcerr << L"error message:\t" << mess << L'\n';
+			wcerr << wformat(L"error code:\t%1%\n") % e.code().value();
+			wcerr << wformat(L"error message:\t%1%\n") % mess;
 
 			delete [] mess;
 		}
@@ -74,7 +74,7 @@ int wmain(int argc, wchar_t** argv)
 			mbstowcs(mess, mess_c, strlen(mess_c));
 
 			wcerr << L"error type:\tstandard\n";
-			wcerr << L"error message:\t" << mess << L'\n';
+			wcerr << wformat(L"error message:\t%1%\n") % mess;
 
 			delete [] mess;
 		}
@@ -86,7 +86,7 @@ int wmain(int argc, wchar_t** argv)
 	catch(dfs_backupper::exception& e)
 	{
 		wcerr << L"error type:\tDFS-Backupper\n";
-		wcerr << L"error message:\t" << e.getMessage() << L'\n';
+		wcerr << wformat(L"error message:\t%1%\n") % e.getMessage();
 	}
 
 	return EXIT_FAILURE;

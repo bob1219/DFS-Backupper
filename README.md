@@ -16,7 +16,7 @@ Commands
 --------
 * clear  
 	* Description: Clear setting file
-	* Usage: `[executable-filename] clear`
+	* Usage: `[executable-filename] clear [setting-name]`
 
 * add  
 	* Description: Addition a setting to setting file
@@ -28,15 +28,15 @@ Commands
 		* -f  
 		Addition file setting
 
-	* Usage: `[executable-filename] add [-d|-f] [from] [to]`
+	* Usage: `[executable-filename] add [setting-name] [-d|-f] [from] [to]`
 
 * list
 	* Description: Print list of settings
-	* Usage: `[executable-filename] list`
+	* Usage: `[executable-filename] list [setting-name]`
 
 * run
 	* Description: Run backup
-	* Usage: `[executable-filename] run`
+	* Usage: `[executable-filename] run [setting-name]`
 
 Files
 -----
@@ -61,5 +61,8 @@ Files
 
 History
 -------
-* 1.0 (February 11th, 2018)  
+* 1.0 (February 11th, 2018)
 	* First version
+
+* 2.0 (February 11th, 2018)
+	* Addition multi setting

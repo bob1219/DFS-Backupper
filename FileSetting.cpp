@@ -4,6 +4,7 @@
 
 // boost
 #include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 
 // header
 #include "class.h"
@@ -11,6 +12,7 @@
 // using
 using namespace std;
 using namespace boost::filesystem;
+using namespace boost;
 
 void dfs_backupper::FileSetting::run()
 {
@@ -23,23 +25,15 @@ void dfs_backupper::FileSetting::run()
 		}
 		catch(...)
 		{
-			wcerr	<< L"failed:\t"
-				<< FromFiles[i]
-				<< L" -> "
-				<< ToFiles[i]
-				<< L'\n';
+			wcerr << wformat(L"failed:\t\t%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
 			continue;
 		}
 
-		wcerr	<< L"succeeded:\t"
-			<< FromFiles[i]
-			<< L" -> "
-			<< ToFiles[i]
-			<< L'\n';
+		wcout << wformat(L"succeeded:\t%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
 	}
 }
 
-dfs_backupper::FileSetting::FileSetting(SettingFile FromSettingFile, SettingFile ToSettingFile)
+dfs_backupper::FileSetting::FileSetting(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
-	open(FromSettingFile, ToSettingFile);
+	open(setting_name, FromSettingFile, ToSettingFile);
 }

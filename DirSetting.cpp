@@ -1,5 +1,6 @@
 // standard library
 #include <cstddef>
+#include <string>
 
 // header
 #include "class.h"
@@ -16,7 +17,7 @@ void dfs_backupper::DirSetting::run()
 		dfs_backupper::copy_directory(FromFiles[i], ToFiles[i]);
 }
 
-dfs_backupper::DirSetting::DirSetting(SettingFile FromSettingFile, SettingFile ToSettingFile)
+dfs_backupper::DirSetting::DirSetting(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
-	open(FromSettingFile, ToSettingFile);
+	open(setting_name, FromSettingFile, ToSettingFile);
 }
