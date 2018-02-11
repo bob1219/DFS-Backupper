@@ -6,6 +6,7 @@
 // boost
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
+#include <boost/format.hpp>
 
 // header
 #include "function.h"
@@ -14,6 +15,7 @@
 // using
 using namespace std;
 using namespace boost::filesystem;
+using namespace boost;
 
 void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 {
@@ -33,32 +35,21 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			if(*i != L'"')
 				filename += *i;
 
-		wostringstream ToFile;
-		ToFile	<< to
-			<< PATH_BREAK_CHARACTER
-			<< filename;
+		wstring ToFile = wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename;
 
 		if(is_regular_file(p))
 		{
 			try
 			{
-				copy_file(p, ToFile.str(), copy_option::overwrite_if_exists);
+				copy_file(p, ToFile, copy_option::overwrite_if_exists);
 			}
 			catch(...)
 			{
-				wcerr	<< L"failed:\t"
-					<< p.wstring()
-					<< L" -> "
-					<< ToFile.str()
-					<< L'\n';
+				wcerr << wformat(L"failed:\t%1% -> %2%\n") % p.wstring() % ToFile;
 				goto loop_end;
 			}
 			
-			wcout	<< L"succeeded:\t"
-				<< p.wstring()
-				<< L" -> "
-				<< ToFile.str()
-				<< L'\n';
+			wcout << wformat(L"succeeded:\t%1% -> %2%\n") % p.wstring() % ToFile;
 		}
 		else
 			dfs_backupper::copy_directory(p.wstring(), ToFile.str());
