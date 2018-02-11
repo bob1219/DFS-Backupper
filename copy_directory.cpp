@@ -39,8 +39,30 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			<< filename;
 
 		if(is_regular_file(p))
-			copy_file(p, ToFile.str());
+		{
+			try
+			{
+				copy_file(p, ToFile.str(), copy_option::overwrite_if_exists);
+			}
+			catch(...)
+			{
+				wcerr	<< L"failed:\t"
+					<< p.wstring()
+					<< L" -> "
+					<< ToFile
+					<< L'\n';
+				goto loop_end;
+			}
+			
+			wcout	<< L"succeeded:\t"
+				<< p.wstring()
+				<< L" -> "
+				<< ToFile
+				<< L'\n';
+		}
 		else
 			dfs_backupper::copy_directory(p.wstring(), ToFile.str());
+
+	loop_end:
 	}
 }
