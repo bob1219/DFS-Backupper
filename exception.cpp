@@ -7,6 +7,6 @@
 // using
 using namespace std;
 
-dfs-backupper::exception::exception(const wstring& message)
-	:this->message(message)
+dfs_backupper::exception::exception(const wstring& _message)
+	:message(_message)
 {}

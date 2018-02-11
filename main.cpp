@@ -16,8 +16,7 @@
 
 // using
 using namespace std;
-using namespace dfs-backupper;
-using namespace boost::system;
+using namespace dfs_backupper;
 
 int wmain(int argc, wchar_t** argv)
 {
@@ -36,8 +35,8 @@ int wmain(int argc, wchar_t** argv)
 		}
 
 		vector<wstring> args;
-		for(wchar_t* arg: argv)
-			args.push_back(arg);
+		for(unsigned int i = 0; i < argc; i++)
+			args.push_back(argv[i]);
 
 		if(CommandProcess(argc, args))
 			return EXIT_SUCCESS;
@@ -47,13 +46,13 @@ int wmain(int argc, wchar_t** argv)
 			return EXIT_FAILURE;
 		}
 	}
-	catch(system_error& e)
+	catch(boost::system::system_error& e)
 	{
 		try
 		{
 			const char* mess_c = e.what();
 			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-			mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
+			mbstowcs(mess, mess_c, strlen(mess_c));
 
 			wcerr << L"error type:\tboost\n";
 			wcerr << L"error code:\t" << e.code().value() << L'\n';
@@ -72,7 +71,7 @@ int wmain(int argc, wchar_t** argv)
 		{
 			const char* mess_c = e.what();
 			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-			mbstowcs(mess, mess_c, (sizeof(mess) / sizeof(*mess)));
+			mbstowcs(mess, mess_c, strlen(mess_c));
 
 			wcerr << L"error type:\tstandard\n";
 			wcerr << L"error message:\t" << mess << L'\n';
@@ -84,7 +83,7 @@ int wmain(int argc, wchar_t** argv)
 			terminate();
 		}
 	}
-	catch(dfs-backupper::exception& e)
+	catch(dfs_backupper::exception& e)
 	{
 		wcerr << L"error type:\tDFS-Backupper\n";
 		wcerr << L"error message:\t" << e.getMessage() << L'\n';
