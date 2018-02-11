@@ -8,6 +8,7 @@
 
 // boost
 #include <boost/format.hpp>
+#include <boost/filesystem.hpp>
 
 // header
 #include "class.h"
@@ -16,6 +17,7 @@
 // using
 using namespace std;
 using namespace boost;
+using namespace boost::filesystem;
 
 void dfs_backupper::setting::open(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
@@ -62,11 +64,37 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingFile FromS
 
 bool dfs_backupper::setting::clear()
 {
-	wofstream FromFile(FromSettingFilename);
+	const path FromSettingFile_ParentPath = path(FromSettingFilename).parent_path();
+	if(!is_directory(FromSettingFile_ParentPath))
+	{
+		try
+		{
+			create_directory(FromSettingFile_ParentPath);
+		}
+		catch(...)
+		{
+			return false;
+		}
+	}
+
+	std::wofstream FromFile(FromSettingFilename);
 	if(FromFile.fail())
 		return false;
 
-	wofstream ToFile(ToSettingFilename);
+	const path ToSettingFile_ParentPath = path(ToSettingFilename).parent_path();
+	if(!is_directory(ToSettingFile_ParentPath))
+	{
+		try
+		{
+			create_directory(ToSettingFile_ParentPath);
+		}
+		catch(...)
+		{
+			return false;
+		}
+	}
+
+	std::wofstream ToFile(ToSettingFilename);
 	if(ToFile.fail())
 		return false;
 
@@ -94,13 +122,13 @@ void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstri
 
 bool dfs_backupper::setting::write()
 {
-	wofstream FromSettingFile;
+	std::wofstream FromSettingFile;
 	FromSettingFile.imbue(locale(""));
 	FromSettingFile.open(FromSettingFilename);
 	if(FromSettingFile.fail())
 		return false;
 
-	wofstream ToSettingFile;
+	std::wofstream ToSettingFile;
 	ToSettingFile.imbue(locale(""));
 	ToSettingFile.open(ToSettingFilename);
 	if(ToSettingFile.fail())
@@ -117,7 +145,7 @@ bool dfs_backupper::setting::write()
 
 bool dfs_backupper::setting::read()
 {
-	wifstream FromSettingFile_ifs;
+	std::wifstream FromSettingFile_ifs;
 	FromSettingFile_ifs.imbue(locale(""));
 	FromSettingFile_ifs.open(FromSettingFilename);
 	if(FromSettingFile_ifs.fail())
@@ -127,7 +155,7 @@ bool dfs_backupper::setting::read()
 	while(getline(FromSettingFile_ifs, FromFile))
 		FromFiles.push_back(FromFile);
 
-	wifstream ToSettingFile_ifs;
+	std::wifstream ToSettingFile_ifs;
 	ToSettingFile_ifs.imbue(locale(""));
 	ToSettingFile_ifs.open(ToSettingFilename);
 	if(ToSettingFile_ifs.fail())
