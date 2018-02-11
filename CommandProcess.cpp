@@ -1,7 +1,6 @@
 // standard library
 #include <vector>
 #include <string>
-#include <iostream>
 
 // header
 #include "function.h"
@@ -28,7 +27,7 @@ bool dfs_backupper::CommandProcess(int argc, const vector<wstring>& args)
 	{
 		if(argc != 6)
 			return false;
-		return command::add(args[2], args[3], args[4], args[4]);
+		return command::add(args[2], args[3], args[4], args[5]);
 	}
 	else if(args[1] == L"run")
 	{

@@ -25,7 +25,7 @@ void dfs_backupper::FileSetting::run()
 		}
 		catch(...)
 		{
-			wcerr << wformat(L"failed:\t%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
+			wcerr << wformat(L"failed:\t\t%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
 			continue;
 		}
 
