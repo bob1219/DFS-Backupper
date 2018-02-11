@@ -13,7 +13,7 @@ namespace dfs_backupper
 	class setting
 	{
 	public:
-		void open(SettingFile FromSettingFile, SettingFile ToSettingFile);
+		void open(const std::wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile);
 		bool read();
 		bool clear();
 		void list();
@@ -33,14 +33,14 @@ namespace dfs_backupper
 	class DirSetting : public setting
 	{
 	public:
-		DirSetting(SettingFile FromSettingFile, SettingFile ToSettingFile);
+		DirSetting(const std::wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile);
 		void run();
 	};
 
 	class FileSetting : public setting
 	{
 	public:
-		FileSetting(SettingFile FromSettingFile, SettingFile ToSettingFile);
+		FileSetting(const std::wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile);
 		void run();
 	};
 

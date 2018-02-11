@@ -13,10 +13,10 @@
 // using
 using namespace std;
 
-bool dfs_backupper::command::clear()
+bool dfs_backupper::command::clear(const wstring& setting_name)
 {
-	DirSetting dirSetting(DIR_FROM, DIR_TO);
-	FileSetting fileSetting(FILE_FROM, FILE_TO);
+	DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
+	FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
 
 	if(!dirSetting.clear())
 		return false;
@@ -26,13 +26,13 @@ bool dfs_backupper::command::clear()
 	return true;
 }
 
-bool dfs_backupper::command::list()
+bool dfs_backupper::command::list(const wstring& setting_name)
 {
-	DirSetting dirSetting(DIR_FROM, DIR_TO);
+	DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
 	if(!dirSetting.read())
 		return false;
 
-	FileSetting fileSetting(FILE_FROM, FILE_TO);
+	FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
 	if(!fileSetting.read())
 		return false;
 
@@ -47,11 +47,11 @@ bool dfs_backupper::command::list()
 	return true;
 }
 
-bool dfs_backupper::command::add(const wstring& option, const wstring& from, const wstring& to)
+bool dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
 {
 	if(option == L"-d")
 	{
-		DirSetting dirSetting(DIR_FROM, DIR_TO);
+		DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
 		if(!dirSetting.read())
 			return false;
 
@@ -61,7 +61,7 @@ bool dfs_backupper::command::add(const wstring& option, const wstring& from, con
 	}
 	else if(option == L"-f")
 	{
-		FileSetting fileSetting(FILE_FROM, FILE_TO);
+		FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
 		if(!fileSetting.read())
 			return false;
 
@@ -72,13 +72,13 @@ bool dfs_backupper::command::add(const wstring& option, const wstring& from, con
 	else throw dfs_backupper::exception(L"unknown option");
 }
 
-bool dfs_backupper::command::run()
+bool dfs_backupper::command::run(const wstring& setting_name)
 {
-	DirSetting dirSetting(DIR_FROM, DIR_TO);
+	DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
 	if(!dirSetting.read())
 		return false;
 
-	FileSetting fileSetting(FILE_FROM, FILE_TO);
+	FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
 	if(!fileSetting.read())
 		return false;
 

@@ -17,25 +17,25 @@
 using namespace std;
 using namespace boost;
 
-void dfs_backupper::setting::open(SettingFile FromSettingFile, SettingFile ToSettingFile)
+void dfs_backupper::setting::open(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
 	// read FromSettingFile setting file
 	switch(FromSettingFile)
 	{
 	case DIR_FROM:
-		FromSettingFilename = wformat(L".%1%DIR_FROM") % PATH_BREAK_CHARACTER;
+		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 
 	case DIR_TO:
-		FromSettingFilename = wformat(L".%1%DIR_TO") % PATH_BREAK_CHARACTER;
+		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 
 	case FILE_FROM:
-		FromSettingFilename = wformat(L".%1%FILE_FROM") % PATH_BREAK_CHARACTER;
+		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 
 	case FILE_TO:
-		FromSettingFilename = wformat(L".%1%FILE_TO") % PATH_BREAK_CHARACTER;
+		FromSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 	}
 
@@ -43,19 +43,19 @@ void dfs_backupper::setting::open(SettingFile FromSettingFile, SettingFile ToSet
 	switch(ToSettingFile)
 	{
 	case DIR_FROM:
-		ToSettingFilename = wformat(L".%1%DIR_FROM") % PATH_BREAK_CHARACTER;
+		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 
 	case DIR_TO:
-		ToSettingFilename = wformat(L".%1%DIR_TO") % PATH_BREAK_CHARACTER;
+		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 
 	case FILE_FROM:
-		ToSettingFilename = wformat(L".%1%FILE_FROM") % PATH_BREAK_CHARACTER;
+		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 
 	case FILE_TO:
-		ToSettingFilename = wformat(L".%1%FILE_TO") % PATH_BREAK_CHARACTER;
+		ToSettingFilename = wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name;
 		break;
 	}
 }

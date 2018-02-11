@@ -33,7 +33,7 @@ void dfs_backupper::FileSetting::run()
 	}
 }
 
-dfs_backupper::FileSetting::FileSetting(SettingFile FromSettingFile, SettingFile ToSettingFile)
+dfs_backupper::FileSetting::FileSetting(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
 {
-	open(FromSettingFile, ToSettingFile);
+	open(setting_name, FromSettingFile, ToSettingFile);
 }
