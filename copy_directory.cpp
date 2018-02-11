@@ -49,7 +49,7 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 				wcerr	<< L"failed:\t"
 					<< p.wstring()
 					<< L" -> "
-					<< ToFile
+					<< ToFile.str()
 					<< L'\n';
 				goto loop_end;
 			}
@@ -57,12 +57,12 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			wcout	<< L"succeeded:\t"
 				<< p.wstring()
 				<< L" -> "
-				<< ToFile
+				<< ToFile.str()
 				<< L'\n';
 		}
 		else
 			dfs_backupper::copy_directory(p.wstring(), ToFile.str());
 
-	loop_end:
+	loop_end:;
 	}
 }
