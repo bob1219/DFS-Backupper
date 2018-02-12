@@ -66,3 +66,6 @@ History
 
 * 2.0 (February 11th, 2018)
 	* Addition multi setting
+
+* 2.1 (February 12th, 2018)
+	* Modify designs

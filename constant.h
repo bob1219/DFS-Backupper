@@ -3,12 +3,10 @@
 
 namespace dfs_backupper
 {
-	enum SettingFile
+	enum class SettingType
 	{
-		DIR_FROM,
-		DIR_TO,
-		FILE_FROM,
-		FILE_TO
+		DIRECTORY,
+		FILE
 	};
 
 	static const wchar_t PATH_BREAK_CHARACTER = L'\\';

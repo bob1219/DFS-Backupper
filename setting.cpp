@@ -1,6 +1,5 @@
 // standard library
 #include <string>
-#include <sstream>
 #include <iostream>
 #include <fstream>
 #include <locale>
@@ -19,52 +18,25 @@ using namespace std;
 using namespace boost;
 using namespace boost::filesystem;
 
-void dfs_backupper::setting::open(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
+void dfs_backupper::setting::open(const wstring& setting_name, SettingType type)
 {
-	// read FromSettingFile setting file
-	switch(FromSettingFile)
+	switch(type)
 	{
-	case DIR_FROM:
-		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
+	case SettingType::DIRECTORY:
+		FromSettingFilename	= (wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
+		ToSettingFilename	= (wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
-	case DIR_TO:
-		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
-		break;
-
-	case FILE_FROM:
-		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
-		break;
-
-	case FILE_TO:
-		FromSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
-		break;
-	}
-
-	// read ToSettingFile_ifs setting file
-	switch(ToSettingFile)
-	{
-	case DIR_FROM:
-		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
-		break;
-
-	case DIR_TO:
-		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
-		break;
-
-	case FILE_FROM:
-		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
-		break;
-
-	case FILE_TO:
-		ToSettingFilename = (wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
+	case SettingType::FILE:
+		FromSettingFilename	= (wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
+		ToSettingFilename	= (wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 	}
 }
 
 bool dfs_backupper::setting::clear()
 {
-	const path FromSettingFile_ParentPath = path(FromSettingFilename).parent_path();
+	const wpath FromSettingFile_ParentPath = wpath(FromSettingFilename).parent_path();
 	if(!is_directory(FromSettingFile_ParentPath))
 	{
 		try
@@ -81,7 +53,7 @@ bool dfs_backupper::setting::clear()
 	if(FromFile.fail())
 		return false;
 
-	const path ToSettingFile_ParentPath = path(ToSettingFilename).parent_path();
+	const wpath ToSettingFile_ParentPath = wpath(ToSettingFilename).parent_path();
 	if(!is_directory(ToSettingFile_ParentPath))
 	{
 		try
@@ -106,7 +78,7 @@ bool dfs_backupper::setting::clear()
 
 void dfs_backupper::setting::list()
 {
-	size_t element_number = FromFiles.size();
+	const size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
 		wcout << wformat(L"%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
 }
