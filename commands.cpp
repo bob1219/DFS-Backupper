@@ -1,5 +1,6 @@
 // standard library
 #include <string>
+#include <iostream>
 
 // header
 #include "function.h"

@@ -28,9 +28,10 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 
 	BOOST_FOREACH(const wpath& p, make_pair(directory_iterator(from), directory_iterator()))
 	{
-		wstring		filename;
-		const wstring	filename_b = p.filename().wstring();
-		for(wstring::iterator i = filename_b.begin(); i != filename_b.end(); i++)
+		wstring			filename;
+		const wstring		filename_b = p.filename().wstring();
+		wstring::const_iterator	end = filename_b.cend();
+		for(wstring::const_iterator i = filename_b.cbegin(); i != filename_b.cend(); i++)
 			if(*i != L'"')
 				filename += *i;
 
