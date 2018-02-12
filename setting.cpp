@@ -23,13 +23,13 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingType type)
 	switch(type)
 	{
 	case SettingType::DIRECTORY:
-		FromSettingFilename	= (wformat(".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
-		ToSettingFilename	= (wformat(".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
+		FromSettingFilename	= (wformat(L".%1%settings%1%%2%%1%DIR_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
+		ToSettingFilename	= (wformat(L".%1%settings%1%%2%%1%DIR_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case SettingType::FILE:
-		FromSettingFilename	= (wformat(".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
-		ToSettingFilename	= (wformat(".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
+		FromSettingFilename	= (wformat(L".%1%settings%1%%2%%1%FILE_FROM") % PATH_BREAK_CHARACTER % setting_name).str();
+		ToSettingFilename	= (wformat(L".%1%settings%1%%2%%1%FILE_TO") % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 	}
 }
