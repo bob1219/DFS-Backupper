@@ -1,6 +1,5 @@
 // standard library
 #include <string>
-#include <sstream>
 #include <iostream>
 
 // boost
@@ -29,8 +28,8 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 
 	BOOST_FOREACH(const wpath& p, make_pair(directory_iterator(from), directory_iterator()))
 	{
-		wstring filename;
-		wstring filename_b = p.filename().wstring();
+		wstring		filename;
+		const wstring	filename_b = p.filename().wstring();
 		for(wstring::iterator i = filename_b.begin(); i != filename_b.end(); i++)
 			if(*i != L'"')
 				filename += *i;

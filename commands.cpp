@@ -1,13 +1,8 @@
 // standard library
-#include <sstream>
-#include <iostream>
-#include <fstream>
-#include <locale>
 #include <string>
 
 // header
 #include "function.h"
-#include "constant.h"
 #include "class.h"
 
 // using
@@ -15,8 +10,8 @@ using namespace std;
 
 bool dfs_backupper::command::clear(const wstring& setting_name)
 {
-	DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
-	FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
+	DirSetting dirSetting(setting_name);
+	FileSetting fileSetting(setting_name);
 
 	if(!dirSetting.clear())
 		return false;
@@ -28,11 +23,11 @@ bool dfs_backupper::command::clear(const wstring& setting_name)
 
 bool dfs_backupper::command::list(const wstring& setting_name)
 {
-	DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
+	DirSetting dirSetting(setting_name);
 	if(!dirSetting.read())
 		return false;
 
-	FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
+	FileSetting fileSetting(setting_name);
 	if(!fileSetting.read())
 		return false;
 
@@ -51,7 +46,7 @@ bool dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 {
 	if(option == L"-d")
 	{
-		DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
+		DirSetting dirSetting(setting_name);
 		if(!dirSetting.read())
 			return false;
 
@@ -61,7 +56,7 @@ bool dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 	}
 	else if(option == L"-f")
 	{
-		FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
+		FileSetting fileSetting(setting_name);
 		if(!fileSetting.read())
 			return false;
 
@@ -74,11 +69,11 @@ bool dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 
 bool dfs_backupper::command::run(const wstring& setting_name)
 {
-	DirSetting dirSetting(setting_name, DIR_FROM, DIR_TO);
+	DirSetting dirSetting(setting_name);
 	if(!dirSetting.read())
 		return false;
 
-	FileSetting fileSetting(setting_name, FILE_FROM, FILE_TO);
+	FileSetting fileSetting(setting_name);
 	if(!fileSetting.read())
 		return false;
 

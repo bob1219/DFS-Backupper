@@ -16,7 +16,7 @@ using namespace boost;
 
 void dfs_backupper::FileSetting::run()
 {
-	size_t element_number = FromFiles.size();
+	const size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
 	{
 		try
@@ -33,7 +33,7 @@ void dfs_backupper::FileSetting::run()
 	}
 }
 
-dfs_backupper::FileSetting::FileSetting(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
+dfs_backupper::FileSetting::FileSetting(const wstring& setting_name)
 {
-	open(setting_name, FromSettingFile, ToSettingFile);
+	open(setting_name, SettingType::FILE);
 }

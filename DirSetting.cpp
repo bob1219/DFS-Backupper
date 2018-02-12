@@ -12,12 +12,12 @@ using namespace std;
 
 void dfs_backupper::DirSetting::run()
 {
-	size_t element_number = FromFiles.size();
+	const size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
 		dfs_backupper::copy_directory(FromFiles[i], ToFiles[i]);
 }
 
-dfs_backupper::DirSetting::DirSetting(const wstring& setting_name, SettingFile FromSettingFile, SettingFile ToSettingFile)
+dfs_backupper::DirSetting::DirSetting(const wstring& setting_name)
 {
-	open(setting_name, FromSettingFile, ToSettingFile);
+	open(setting_name, SettingType::DIRECTORY);
 }
