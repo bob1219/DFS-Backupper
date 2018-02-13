@@ -1,5 +1,5 @@
-#ifndef _CLASS_H_
-#define _CLASS_H_
+#ifndef CLASS_H
+#define CLASS_H
 
 // standard library
 #include <string>

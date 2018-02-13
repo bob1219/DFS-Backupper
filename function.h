@@ -1,5 +1,5 @@
-#ifndef _FUNCTION_H_
-#define _FUNCTION_H_
+#ifndef FUNCTION_H
+#define FUNCTION_H
 
 // standard library
 #include <vector>
