@@ -6,6 +6,7 @@
 #include <string>
 #include <cstring>
 #include <exception>
+#include <cstddef>
 
 // boost
 #include <boost/system/system_error.hpp>
@@ -38,7 +39,7 @@ int wmain(int argc, wchar_t** argv)
 		for(unsigned int i = 0; i < argc; i++)
 			args.push_back(argv[i]);
 
-		if(CommandProcess(argc, args))
+		if(CommandProcess(args))
 			return EXIT_SUCCESS;
 		else
 		{
@@ -50,9 +51,10 @@ int wmain(int argc, wchar_t** argv)
 	{
 		try
 		{
-			const char* mess_c = e.what();
-			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-			mbstowcs(mess, mess_c, strlen(mess_c));
+			const char*	mess_c		= e.what();
+			size_t		mess_len	= strlen(mess_c);
+			wchar_t*	mess		= new wchar_t[mess_len + 1];
+			mbstowcs(mess, mess_c, mess_len);
 
 			wcerr << L"error type:\tboost\n";
 			wcerr << wformat(L"error code:\t%1%\n") % e.code().value();
@@ -69,9 +71,10 @@ int wmain(int argc, wchar_t** argv)
 	{
 		try
 		{
-			const char* mess_c = e.what();
-			wchar_t* mess = new wchar_t[strlen(mess_c) + 1];
-			mbstowcs(mess, mess_c, strlen(mess_c));
+			const char*	mess_c		= e.what();
+			size_t		mess_len	= strlen(mess_c);
+			wchar_t*	mess		= new wchar_t[mess_len + 1];
+			mbstowcs(mess, mess_c, mess_len);
 
 			wcerr << L"error type:\tstandard\n";
 			wcerr << wformat(L"error message:\t%1%\n") % mess;
