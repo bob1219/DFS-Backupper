@@ -19,12 +19,12 @@ using namespace boost;
 void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 {
 	wstring to(_to);
-	if(to[to.size() - 1] == PATH_BREAK_CHARACTER)
+	if(to.at(to.size() - 1) == PATH_BREAK_CHARACTER)
 		to = to.substr(0, to.size() - 1);
 
 	if(is_directory(to))
 		remove_all(to);
-	create_directories(to);
+	copy_directory(from, to);
 
 	BOOST_FOREACH(const wpath& p, make_pair(directory_iterator(from), directory_iterator()))
 	{
