@@ -51,9 +51,7 @@ bool dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 		if(!dirSetting.read())
 			return false;
 
-		dirSetting.add(from, to);
-
-		return true;
+		return dirSetting.add(from, to);
 	}
 	else if(option == L"-f")
 	{
@@ -61,9 +59,7 @@ bool dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 		if(!fileSetting.read())
 			return false;
 
-		fileSetting.add(from, to);
-
-		return true;
+		return fileSetting(from, to);
 	}
 	else throw dfs_backupper::exception(L"unknown option");
 }
@@ -82,4 +78,25 @@ bool dfs_backupper::command::run(const wstring& setting_name)
 	fileSetting.run();
 
 	return true;
+}
+
+bool dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+{
+	if(option == L"-d")
+	{
+		DirSetting dirSetting(setting_name);
+		if(!dirSetting.read())
+			return false;
+
+		return dirSetting.remove(from, to);
+	}
+	else if(option == L"-f")
+	{
+		FileSetting fileSetting(setting_name);
+		if(!fileSetting.read())
+			return false;
+
+		return fileSetting.remove(from, to);
+	}
+	else throw dfs_backupper::exception(L"unknown option");
 }

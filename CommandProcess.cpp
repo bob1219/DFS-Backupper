@@ -35,5 +35,11 @@ bool dfs_backupper::CommandProcess(const vector<wstring>& args)
 			return false;
 		return command::run(args.at(2));
 	}
+	else if(args.at(1) == L"remove")
+	{
+		if(args.size() != 6)
+			return false;
+		return command::remove(args.at(2), args.at(3), args.at(4), args.at(5));
+	}
 	else throw dfs_backupper::exception(L"unknown command");
 }
