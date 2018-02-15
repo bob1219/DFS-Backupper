@@ -161,5 +161,8 @@ bool dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 	if(ToFiles.erase(to_it) == ToFiles.end())
 		return false;
 
+	if(!write())
+		throw dfs_backupper::exception(L"cannot open file");
+
 	return true;
 }
