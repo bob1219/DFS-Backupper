@@ -96,6 +96,8 @@ bool dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstri
 
 	if(!write())
 		throw dfs_backupper::exception(L"cannot open file");
+
+	return true;
 }
 
 bool dfs_backupper::setting::write()

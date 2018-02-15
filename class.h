@@ -18,7 +18,7 @@ namespace dfs_backupper
 		bool clear();
 		void list();
 		bool add(const std::wstring& from, const std::wstring& to);
-		bool remove(const wstring& from, const wstring& to)
+		bool remove(const std::wstring& from, const std::wstring& to);
 		virtual void run() = 0;
 
 	private:

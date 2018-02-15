@@ -59,7 +59,7 @@ bool dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 		if(!fileSetting.read())
 			return false;
 
-		return fileSetting(from, to);
+		return fileSetting.add(from, to);
 	}
 	else throw dfs_backupper::exception(L"unknown option");
 }
