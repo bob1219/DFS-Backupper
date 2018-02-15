@@ -24,10 +24,11 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 
 	if(is_directory(to))
 		remove_all(to);
-	copy_directory(from, to);
+	boost::filesystem::copy_directory(from, to);
 
-	BOOST_FOREACH(const wpath& p, make_pair(directory_iterator(from), directory_iterator()))
+	for(directory_iterator i(from); i != directory_iterator(); i++)
 	{
+		const wpath p = *i;
 		wstring			filename;
 		const wstring		filename_b = p.filename().wstring();
 		wstring::const_iterator	end = filename_b.cend();
