@@ -6,6 +6,7 @@ Development Environment
 -----------------------
 * Operating System: Microsoft Windows 10
 * Programming Language: C++
+* Builder: Microsoft Visual Studio 2017
 
 Usage
 -----
@@ -23,10 +24,10 @@ Commands
 
 	* Options
 		* -d  
-		Addition directory setting
+		Addition a directory setting
 
 		* -f  
-		Addition file setting
+		Addition a file setting
 
 	* Usage: `[executable-filename] add [setting-name] [-d|-f] [from] [to]`
 
@@ -37,6 +38,18 @@ Commands
 * run
 	* Description: Run backup
 	* Usage: `[executable-filename] run [setting-name]`
+
+* remove
+	* Description: Remove a setting
+
+	* Options
+		* -d  
+		Remove a directory setting
+
+		* -f  
+		Remove a file setting
+
+	* Usage: `[executable-filename] remove [setting-name] [-d|-f] [from] [to]`
 
 Files
 -----
@@ -69,3 +82,6 @@ History
 
 * 2.1 (February 12th, 2018)
 	* Modify designs
+
+* 3.0 (February 18th, 2018)
+	* Addition remove command

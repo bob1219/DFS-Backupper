@@ -1,5 +1,5 @@
-#ifndef _CLASS_H_
-#define _CLASS_H_
+#ifndef CLASS_H
+#define CLASS_H
 
 // standard library
 #include <string>
@@ -17,7 +17,8 @@ namespace dfs_backupper
 		bool read();
 		bool clear();
 		void list();
-		void add(const std::wstring& from, const std::wstring& to);
+		bool add(const std::wstring& from, const std::wstring& to);
+		bool remove(const std::wstring& from, const std::wstring& to);
 		virtual void run() = 0;
 
 	private:

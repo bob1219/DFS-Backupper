@@ -1,5 +1,5 @@
-#ifndef _FUNCTION_H_
-#define _FUNCTION_H_
+#ifndef FUNCTION_H
+#define FUNCTION_H
 
 // standard library
 #include <vector>
@@ -7,7 +7,7 @@
 
 namespace dfs_backupper
 {
-	bool CommandProcess(int argc, const std::vector<std::wstring>& args);
+	bool CommandProcess(const std::vector<std::wstring>& args);
 	void copy_directory(const std::wstring& from, const std::wstring& _to);
 
 	namespace command
@@ -16,6 +16,7 @@ namespace dfs_backupper
 		bool list(const std::wstring& setting_name);
 		bool add(const std::wstring& setting_name, const std::wstring& option, const std::wstring& from, const std::wstring& to);
 		bool run(const std::wstring& setting_name);
+		bool remove(const std::wstring& setting_name, const std::wstring& option, const std::wstring& from, const std::wstring& to);
 	}
 }
 

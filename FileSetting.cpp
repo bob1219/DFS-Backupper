@@ -21,15 +21,15 @@ void dfs_backupper::FileSetting::run()
 	{
 		try
 		{
-			copy_file(FromFiles[i], ToFiles[i], copy_option::overwrite_if_exists);
+			copy_file(FromFiles.at(i), ToFiles.at(i), copy_option::overwrite_if_exists);
 		}
 		catch(...)
 		{
-			wcerr << wformat(L"failed:\t\t%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
+			wcerr << wformat(L"failed:\t\t%1% -> %2%\n") % FromFiles.at(i) % ToFiles.at(i);
 			continue;
 		}
 
-		wcout << wformat(L"succeeded:\t%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
+		wcout << wformat(L"succeeded:\t%1% -> %2%\n") % FromFiles.at(i) % ToFiles.at(i);
 	}
 }
 

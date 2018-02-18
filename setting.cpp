@@ -4,6 +4,7 @@
 #include <fstream>
 #include <locale>
 #include <cstddef>
+#include <algorithm>
 
 // boost
 #include <boost/format.hpp>
@@ -80,16 +81,23 @@ void dfs_backupper::setting::list()
 {
 	const size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; i++)
-		wcout << wformat(L"%1% -> %2%\n") % FromFiles[i] % ToFiles[i];
+		wcout << wformat(L"%1% -> %2%\n") % FromFiles.at(i) % ToFiles.at(i);
 }
 
-void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
+bool dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
 {
+	vector<wstring>::iterator from_it	= find(FromFiles.begin(), FromFiles.end(), FromSettingFilename);
+	vector<wstring>::iterator to_it		= find(ToFiles.begin(), ToFiles.end(), ToSettingFilename);
+	if(from_it != FromFiles.end() && to_it != ToFiles.end() && (from_it - FromFiles.begin()) == (to_it - ToFiles.begin())) // exists same setting
+		return false;
+
 	FromFiles.push_back(FromSettingFilename);
 	ToFiles.push_back(ToSettingFilename);
 
 	if(!write())
 		throw dfs_backupper::exception(L"cannot open file");
+
+	return true;
 }
 
 bool dfs_backupper::setting::write()
@@ -136,6 +144,25 @@ bool dfs_backupper::setting::read()
 	wstring ToFile;
 	while(getline(ToSettingFile_ifs, ToFile))
 		ToFiles.push_back(ToFile);
+
+	return true;
+}
+
+bool dfs_backupper::setting::remove(const wstring& from, const wstring& to)
+{
+	vector<wstring>::iterator from_it	= find(FromFiles.begin(), FromFiles.end(), from);
+	vector<wstring>::iterator to_it		= find(ToFiles.begin(), ToFiles.end(), to);
+	if(from_it == FromFiles.end() || to_it == ToFiles.end())
+		return false;
+
+	if(FromFiles.erase(from_it) == FromFiles.end())
+		return false;
+
+	if(ToFiles.erase(to_it) == ToFiles.end())
+		return false;
+
+	if(!write())
+		throw dfs_backupper::exception(L"cannot open file");
 
 	return true;
 }

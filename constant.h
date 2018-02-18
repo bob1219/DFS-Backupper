@@ -1,5 +1,5 @@
-#ifndef _CONSTANT_H_
-#define _CONSTANT_H_
+#ifndef CONSTANT_H
+#define CONSTANT_H
 
 namespace dfs_backupper
 {
