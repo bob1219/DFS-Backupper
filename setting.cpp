@@ -100,8 +100,7 @@ void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstri
 	FromFiles.push_back(FromSettingFilename);
 	ToFiles.push_back(ToSettingFilename);
 
-	if(!write())
-		throw dfs_backupper::exception(L"cannot open file");
+	write();
 }
 
 void dfs_backupper::setting::write()
@@ -168,6 +167,5 @@ void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 	if(FromFailed || ToFailed)
 		throw dfs_backupper::exception(L"failed remove");
 
-	if(!write())
-		throw dfs_backupper::exception(L"cannot open file");
+	write();
 }
