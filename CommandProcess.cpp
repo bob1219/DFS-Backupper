@@ -9,7 +9,7 @@
 // using
 using namespace std;
 
-bool dfs_backupper::CommandProcess(const vector<wstring>& args)
+void dfs_backupper::CommandProcess(const vector<wstring>& args)
 {
 	if(args.at(1) == L"clear")
 	{
