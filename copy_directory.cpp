@@ -32,7 +32,7 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 		wstring			filename;
 		const wstring		filename_b = p.filename().wstring();
 		wstring::const_iterator	end = filename_b.cend();
-		for(wstring::const_iterator i = filename_b.cbegin(); i != filename_b.cend(); i++)
+		for(wstring::const_iterator i = filename_b.cbegin(); i != filename_b.cend(); ++i)
 			if(*i != L'"')
 				filename += *i;
 

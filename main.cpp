@@ -35,7 +35,7 @@ int wmain(int argc, wchar_t** argv)
 		}
 
 		vector<wstring> args;
-		for(unsigned int i = 0; i < argc; i++)
+		for(unsigned int i = 0; i < argc; ++i)
 			args.push_back(argv[i]);
 
 		CommandProcess(args);

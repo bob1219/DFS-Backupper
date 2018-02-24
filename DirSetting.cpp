@@ -13,7 +13,7 @@ using namespace std;
 void dfs_backupper::DirSetting::run()
 {
 	const size_t element_number = FromFiles.size();
-	for(unsigned int i = 0; i < element_number; i++)
+	for(unsigned int i = 0; i < element_number; ++i)
 		dfs_backupper::copy_directory(FromFiles.at(i), ToFiles.at(i));
 }
 
