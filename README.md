@@ -85,3 +85,6 @@ History
 
 * 3.0 (February 18th, 2018)
 	* Addition remove command
+
+* 3.1 (February 24th, 2018)
+	* Modify designs
