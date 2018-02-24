@@ -1,6 +1,7 @@
 // standard library
 #include <string>
 #include <iostream>
+#include <memory>
 
 // header
 #include "function.h"
@@ -9,94 +10,66 @@
 // using
 using namespace std;
 
-bool dfs_backupper::command::clear(const wstring& setting_name)
+void dfs_backupper::command::clear(const wstring& setting_name)
 {
 	DirSetting dirSetting(setting_name);
 	FileSetting fileSetting(setting_name);
 
-	if(!dirSetting.clear())
-		return false;
-	if(!fileSetting.clear())
-		return false;
-
-	return true;
+	dirSetting.clear();
+	fileSetting.clear();
 }
 
-bool dfs_backupper::command::list(const wstring& setting_name)
+void dfs_backupper::command::list(const wstring& setting_name)
 {
 	DirSetting dirSetting(setting_name);
-	if(!dirSetting.read())
-		return false;
+	dirSetting.read();
 
 	FileSetting fileSetting(setting_name);
-	if(!fileSetting.read())
-		return false;
+	fileSetting.read();
 
-	wcout << L"directory:\n";
+	wcout << L"directory:" << endl;
 	dirSetting.list();
 
-	wcout << L'\n';
+	wcout << endl;
 
-	wcout << L"file:\n";
+	wcout << L"file:" << endl;
 	fileSetting.list();
-
-	return true;
 }
 
-bool dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
 {
+	unique_ptr<setting> Setting;
 	if(option == L"-d")
-	{
-		DirSetting dirSetting(setting_name);
-		if(!dirSetting.read())
-			return false;
-
-		return dirSetting.add(from, to);
-	}
+		Setting.reset(new DirSetting(setting_name));
 	else if(option == L"-f")
-	{
-		FileSetting fileSetting(setting_name);
-		if(!fileSetting.read())
-			return false;
-
-		return fileSetting.add(from, to);
-	}
+		Setting.reset(new FileSetting(setting_name));
 	else throw dfs_backupper::exception(L"unknown option");
+
+	Setting->read();
+	Setting->add(from, to);
 }
 
-bool dfs_backupper::command::run(const wstring& setting_name)
+void dfs_backupper::command::run(const wstring& setting_name)
 {
 	DirSetting dirSetting(setting_name);
-	if(!dirSetting.read())
-		return false;
+	dirSetting.read();
 
 	FileSetting fileSetting(setting_name);
-	if(!fileSetting.read())
-		return false;
+	fileSetting.read();
 
 	dirSetting.run();
 	fileSetting.run();
-
-	return true;
 }
 
-bool dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
 {
+	unique_ptr<setting> Setting;
 	if(option == L"-d")
-	{
-		DirSetting dirSetting(setting_name);
-		if(!dirSetting.read())
-			return false;
-
-		return dirSetting.remove(from, to);
-	}
+		Setting.reset(new DirSetting(setting_name));
 	else if(option == L"-f")
-	{
-		FileSetting fileSetting(setting_name);
-		if(!fileSetting.read())
-			return false;
+		Setting.reset(new FileSetting(setting_name));
+	else throw dfs_backupper::exception(L"unknown command");
 
-		return fileSetting.remove(from, to);
-	}
-	else throw dfs_backupper::exception(L"unknown option");
+	Setting->read();
+	Setting->add(from, to);
 }

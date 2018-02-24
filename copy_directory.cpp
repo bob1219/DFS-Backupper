@@ -1,6 +1,7 @@
 // standard library
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 // boost
 #include <boost/filesystem.hpp>
@@ -19,20 +20,19 @@ using namespace boost;
 void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 {
 	wstring to(_to);
-	if(to.at(to.size() - 1) == PATH_BREAK_CHARACTER)
+	if(*(to.end() - 1) == PATH_BREAK_CHARACTER)
 		to = to.substr(0, to.size() - 1);
 
 	if(is_directory(to))
 		remove_all(to);
 	boost::filesystem::copy_directory(from, to);
 
-	for(directory_iterator i(from); i != directory_iterator(); i++)
+	for_each(directory_iterator(from), directory_iterator(), [&](const wpath& p)
 	{
-		const wpath p = *i;
 		wstring			filename;
 		const wstring		filename_b = p.filename().wstring();
 		wstring::const_iterator	end = filename_b.cend();
-		for(wstring::const_iterator i = filename_b.cbegin(); i != filename_b.cend(); i++)
+		for(wstring::const_iterator i = filename_b.cbegin(); i != filename_b.cend(); ++i)
 			if(*i != L'"')
 				filename += *i;
 
@@ -56,5 +56,5 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			dfs_backupper::copy_directory(p.wstring(), ToFile);
 
 	loop_end:;
-	}
+	});
 }

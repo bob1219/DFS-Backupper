@@ -1,6 +1,5 @@
 // standard library
 #include <iostream>
-#include <locale>
 #include <cstdlib>
 #include <vector>
 #include <string>
@@ -31,65 +30,47 @@ int wmain(int argc, wchar_t** argv)
 
 		if(argc == 1)
 		{
-			wcerr << wformat(L"usage: %1% [command] <arguments>\n") % argv[0];
+			wcerr << wformat(L"usage: %1% [command] <arguments>") % argv[0] << endl;
 			return EXIT_FAILURE;
 		}
 
 		vector<wstring> args;
-		for(unsigned int i = 0; i < argc; i++)
+		for(unsigned int i = 0; i < argc; ++i)
 			args.push_back(argv[i]);
 
-		if(CommandProcess(args))
-			return EXIT_SUCCESS;
-		else
-		{
-			wcerr << L"failed.\n";
-			return EXIT_FAILURE;
-		}
+		CommandProcess(args);
+
+		return EXIT_SUCCESS;
 	}
 	catch(boost::system::system_error& e)
 	{
-		try
-		{
-			const char*	mess_c		= e.what();
-			size_t		mess_len	= strlen(mess_c);
-			wchar_t*	mess		= new wchar_t[mess_len + 1];
-			mbstowcs(mess, mess_c, mess_len);
+		const char*	mess_c		= e.what();
+		size_t		mess_len	= strlen(mess_c);
+		wchar_t*	mess		= new wchar_t[mess_len + 1];
+		mbstowcs(mess, mess_c, mess_len);
 
-			wcerr << L"error type:\tboost\n";
-			wcerr << wformat(L"error code:\t%1%\n") % e.code().value();
-			wcerr << wformat(L"error message:\t%1%\n") % mess;
+		wcerr << L"error:" << endl;
+		wcerr << mess << endl;
+		wcerr << wformat(L"(error code: %1%)") % e.code().value() << endl;
 
-			delete [] mess;
-		}
-		catch(...)
-		{
-			terminate();
-		}
+		delete [] mess;
 	}
 	catch(std::exception& e)
 	{
-		try
-		{
-			const char*	mess_c		= e.what();
-			size_t		mess_len	= strlen(mess_c);
-			wchar_t*	mess		= new wchar_t[mess_len + 1];
-			mbstowcs(mess, mess_c, mess_len);
+		const char*	mess_c		= e.what();
+		size_t		mess_len	= strlen(mess_c);
+		wchar_t*	mess		= new wchar_t[mess_len + 1];
+		mbstowcs(mess, mess_c, mess_len);
 
-			wcerr << L"error type:\tstandard\n";
-			wcerr << wformat(L"error message:\t%1%\n") % mess;
+		wcerr << L"error:" << endl;
+		wcerr << mess << endl;
 
-			delete [] mess;
-		}
-		catch(...)
-		{
-			terminate();
-		}
+		delete [] mess;
 	}
 	catch(dfs_backupper::exception& e)
 	{
-		wcerr << L"error type:\tDFS-Backupper\n";
-		wcerr << wformat(L"error message:\t%1%\n") % e.getMessage();
+		wcerr << L"error:" << endl;
+		wcerr << e.getMessage() << endl;
 	}
 
 	return EXIT_FAILURE;

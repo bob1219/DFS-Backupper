@@ -14,17 +14,17 @@ namespace dfs_backupper
 	{
 	public:
 		void open(const std::wstring& setting_name, SettingType type);
-		bool read();
-		bool clear();
+		void read();
+		void clear();
 		void list();
-		bool add(const std::wstring& from, const std::wstring& to);
-		bool remove(const std::wstring& from, const std::wstring& to);
+		void add(const std::wstring& from, const std::wstring& to);
+		void remove(const std::wstring& from, const std::wstring& to);
 		virtual void run() = 0;
 
 	private:
 		std::wstring FromSettingFilename;
 		std::wstring ToSettingFilename;
-		bool write();
+		void write();
 
 	protected:
 		std::vector<std::wstring> FromFiles;
