@@ -10,14 +10,14 @@ Development Environment
 
 Usage
 -----
-`[executable-filename] [command] <arguments>`  
-Please look chapter "Commands".
+`backup [command] <arguments>`  
+Please look at chapter "Commands".
 
 Commands
 --------
 * clear  
 	* Description: Clear setting file
-	* Usage: `[executable-filename] clear [setting-name]`
+	* Usage: `backup clear [setting-name]`
 
 * add  
 	* Description: Addition a setting to setting file
@@ -29,15 +29,15 @@ Commands
 		* -f  
 		Addition a file setting
 
-	* Usage: `[executable-filename] add [setting-name] [-d|-f] [from] [to]`
+	* Usage: `backup add [setting-name] [-d|-f] [from] [to]`
 
 * list
 	* Description: Print list of settings
-	* Usage: `[executable-filename] list [setting-name]`
+	* Usage: `backup list [setting-name]`
 
 * run
 	* Description: Run backup
-	* Usage: `[executable-filename] run [setting-name]`
+	* Usage: `backup run [setting-name]`
 
 * remove
 	* Description: Remove a setting
@@ -49,7 +49,7 @@ Commands
 		* -f  
 		Remove a file setting
 
-	* Usage: `[executable-filename] remove [setting-name] [-d|-f] [from] [to]`
+	* Usage: `backup remove [setting-name] [-d|-f] [from] [to]`
 
 Files
 -----
@@ -87,4 +87,7 @@ History
 	* Addition remove command
 
 * 3.1 (February 24th, 2018)
+	* Modify designs
+
+* 3.2 (March 3rd, 2018)
 	* Modify designs
