@@ -16,15 +16,15 @@ namespace dfs_backupper
 		void open(const std::wstring& setting_name, SettingType type);
 		void read();
 		void clear();
-		void list();
+		void list() const;
 		void add(const std::wstring& from, const std::wstring& to);
 		void remove(const std::wstring& from, const std::wstring& to);
-		virtual void run() = 0;
+		virtual void run() const = 0;
 
 	private:
 		std::wstring FromSettingFilename;
 		std::wstring ToSettingFilename;
-		void write();
+		void write() const;
 
 	protected:
 		std::vector<std::wstring> FromFiles;
@@ -35,21 +35,21 @@ namespace dfs_backupper
 	{
 	public:
 		DirSetting(const std::wstring& setting_name);
-		void run();
+		void run() const;
 	};
 
 	class FileSetting : public setting
 	{
 	public:
 		FileSetting(const std::wstring& setting_name);
-		void run();
+		void run() const;
 	};
 
 	class exception
 	{
 	public:
 		exception(const std::wstring& _message);
-		const std::wstring& getMessage() { return message; }
+		std::wstring getMessage() const { return message; }
 
 	private:
 		std::wstring message;

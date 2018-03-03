@@ -29,14 +29,8 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 
 	for_each(directory_iterator(from), directory_iterator(), [&](const wpath& p)
 	{
-		wstring			filename;
-		const wstring		filename_b = p.filename().wstring();
-		wstring::const_iterator	end = filename_b.cend();
-		for(wstring::const_iterator i = filename_b.cbegin(); i != filename_b.cend(); ++i)
-			if(*i != L'"')
-				filename += *i;
-
-		wstring ToFile = (wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str();
+		const wstring filename(p.filename().wstring());
+		const wstring ToFile((wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str());
 
 		if(is_regular_file(p))
 		{
@@ -52,8 +46,7 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 			
 			wcout << wformat(L"succeeded:\t%1% -> %2%\n") % p.wstring() % ToFile;
 		}
-		else
-			dfs_backupper::copy_directory(p.wstring(), ToFile);
+		else dfs_backupper::copy_directory(p.wstring(), ToFile);
 
 	loop_end:;
 	});
