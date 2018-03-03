@@ -83,7 +83,7 @@ void dfs_backupper::setting::clear()
 	ToFiles.clear();
 }
 
-void dfs_backupper::setting::list()
+void dfs_backupper::setting::list() const
 {
 	const size_t element_number = FromFiles.size();
 	for(unsigned int i = 0; i < element_number; ++i)
@@ -103,7 +103,7 @@ void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstri
 	write();
 }
 
-void dfs_backupper::setting::write()
+void dfs_backupper::setting::write() const
 {
 	std::wofstream FromSettingFile;
 	FromSettingFile.imbue(locale(""));
