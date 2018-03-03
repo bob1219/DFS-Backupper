@@ -6,6 +6,7 @@
 #include <cstring>
 #include <exception>
 #include <cstddef>
+#include <memory>
 
 // boost
 #include <boost/system/system_error.hpp>
@@ -35,8 +36,7 @@ int wmain(int argc, wchar_t** argv)
 		}
 
 		vector<wstring> args;
-		for(unsigned int i = 0; i < argc; ++i)
-			args.push_back(argv[i]);
+		args.assign(argv, argv + argc);
 
 		CommandProcess(args);
 
@@ -44,28 +44,24 @@ int wmain(int argc, wchar_t** argv)
 	}
 	catch(boost::system::system_error& e)
 	{
-		const char*	mess_c		= e.what();
-		size_t		mess_len	= strlen(mess_c);
-		wchar_t*	mess		= new wchar_t[mess_len + 1];
-		mbstowcs(mess, mess_c, mess_len);
+		const char*		mess_c		= e.what();
+		size_t			mess_len	= strlen(mess_c);
+		unique_ptr<wchar_t[]>	mess(new wchar_t[mess_len + 1]);
+		mbstowcs(mess.get(), mess_c, mess_len);
 
 		wcerr << L"error:" << endl;
-		wcerr << mess << endl;
+		wcerr << mess.get() << endl;
 		wcerr << wformat(L"(error code: %1%)") % e.code().value() << endl;
-
-		delete [] mess;
 	}
 	catch(std::exception& e)
 	{
-		const char*	mess_c		= e.what();
-		size_t		mess_len	= strlen(mess_c);
-		wchar_t*	mess		= new wchar_t[mess_len + 1];
-		mbstowcs(mess, mess_c, mess_len);
+		const char*		mess_c		= e.what();
+		size_t			mess_len	= strlen(mess_c);
+		unique_ptr<wchar_t[]>	mess(new wchar_t[mess_len + 1]);
+		mbstowcs(mess.get(), mess_c, mess_len);
 
 		wcerr << L"error:" << endl;
-		wcerr << mess << endl;
-
-		delete [] mess;
+		wcerr << mess.get() << endl;
 	}
 	catch(dfs_backupper::exception& e)
 	{
