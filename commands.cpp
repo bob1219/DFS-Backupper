@@ -71,5 +71,5 @@ void dfs_backupper::command::remove(const wstring& setting_name, const wstring& 
 	else throw dfs_backupper::exception(L"unknown command");
 
 	Setting->read();
-	Setting->add(from, to);
+	Setting->remove(from, to);
 }
