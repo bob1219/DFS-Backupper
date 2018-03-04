@@ -17,12 +17,15 @@ using namespace boost::filesystem;
 
 void dfs_backupper::copy_file(const wstring& from, const wstring& to)
 {
-	time_t FromFileLastUpdate	= last_write_time(from);
-	time_t ToFileLastUpdate		= last_write_time(to);
-	if(difftime(FromFileLastUpdate, ToFileLastUpdate) <= 0)
+	if(is_regular_file(to))
 	{
-		wcout << wformat(L"not need update:\t%1% -> %2%") % from % to << endl;
-		return;
+		time_t FromFileLastUpdate	= last_write_time(from);
+		time_t ToFileLastUpdate		= last_write_time(to);
+		if(difftime(FromFileLastUpdate, ToFileLastUpdate) <= 0)
+		{
+			wcout << wformat(L"not need update:\t%1% -> %2%") % from % to << endl;
+			return;
+		}
 	}
 	
 	try
@@ -31,9 +34,9 @@ void dfs_backupper::copy_file(const wstring& from, const wstring& to)
 	}
 	catch(...)
 	{
-		wcerr << wformat(L"failed:\t\t%1% -> %2%") % from % to << endl;
+		wcerr << wformat(L"failed:\t\t\t%1% -> %2%") % from % to << endl;
 		return;
 	}
 	
-	wcout << wformat(L"successful:\t%1% -> %2%") % from % to << endl;
+	wcout << wformat(L"successful:\t\t%1% -> %2%") % from % to << endl;
 }
