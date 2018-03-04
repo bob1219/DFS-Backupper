@@ -1,6 +1,5 @@
 // standard library
 #include <string>
-#include <iostream>
 #include <algorithm>
 
 // boost
@@ -33,21 +32,8 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 		const wstring ToFile((wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str());
 
 		if(is_regular_file(p))
-		{
-			try
-			{
-				copy_file(p, ToFile, copy_option::overwrite_if_exists);
-			}
-			catch(...)
-			{
-				wcerr << wformat(L"failed:\t\t%1% -> %2%\n") % p.wstring() % ToFile;
-				goto loop_end;
-			}
-			
-			wcout << wformat(L"succeeded:\t%1% -> %2%\n") % p.wstring() % ToFile;
-		}
-		else dfs_backupper::copy_directory(p.wstring(), ToFile);
-
-	loop_end:;
+			dfs_backupper::copy_file(p.wstring(), ToFile);
+		else
+			dfs_backupper::copy_directory(p.wstring(), ToFile);
 	});
 }
