@@ -91,3 +91,6 @@ History
 
 * 3.2 (March 3rd, 2018)
 	* Modify designs
+
+* 4.0 (March 4th, 2018)
+	* Introduction effecient backup
