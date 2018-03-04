@@ -8,8 +8,6 @@
 
 // using
 using namespace std;
-using namespace boost::filesystem;
-using namespace boost;
 
 void dfs_backupper::FileSetting::run() const
 {
