@@ -9,6 +9,7 @@
 
 // header
 #include "function.h"
+#include "time.h"
 
 // using
 using namespace std;
@@ -19,9 +20,9 @@ void dfs_backupper::copy_file(const wstring& from, const wstring& to)
 {
 	if(is_regular_file(to))
 	{
-		time_t FromFileLastUpdate	= last_write_time(from);
-		time_t ToFileLastUpdate		= last_write_time(to);
-		if(difftime(FromFileLastUpdate, ToFileLastUpdate) <= 0)
+		Time FromFileLastUpdate{last_write_time(from)};
+		Time ToFileLastUpdate{last_write_time(to)};
+		if(ToFileLastUpdate > FromFileLastUpdate)
 		{
 			wcout << wformat(L"not need update:\t%1% -> %2%") % from % to << endl;
 			return;
