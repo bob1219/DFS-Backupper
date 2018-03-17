@@ -8,7 +8,7 @@
 namespace dfs_backupper
 {
 	void CommandProcess(const std::vector<std::wstring>& args);
-	void copy_directory(const std::wstring& from, const std::wstring& _to);
+	void copy_directory(const std::wstring& _from, const std::wstring& _to);
 	void copy_file(const std::wstring& from, const std::wstring& to);
 
 	namespace command
