@@ -6,6 +6,7 @@
 
 // header
 #include "constant.h"
+#include "setting.h"
 
 namespace dfs_backupper
 {

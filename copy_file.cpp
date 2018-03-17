@@ -9,7 +9,7 @@
 
 // header
 #include "function.h"
-#include "time.h"
+#include "Time.h"
 
 // using
 using namespace std;
