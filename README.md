@@ -94,3 +94,6 @@ History
 
 * 4.0 (March 4th, 2018)
 	* Introduction effecient backup
+
+* 5.0 (March 17th, 2018)
+	* Apply effecient backup to directory backup
