@@ -10,6 +10,12 @@ namespace dfs_backupper
 	{
 	public:
 		exception(const std::wstring& _message) : message{_message} {}
+		exception(const exception&) = default;
+		exception(exception&&) = default;
+
+		exception& operator=(const exception&) = default;
+		exception& operator=(exception&&) = default;
+
 		std::wstring getMessage() { return message; }
 
 	private:

@@ -14,7 +14,8 @@
 #include <boost/filesystem.hpp>
 
 // header
-#include "class.h"
+#include "setting.h"
+#include "exception.h"
 #include "constant.h"
 
 // using
@@ -74,8 +75,7 @@ void dfs_backupper::setting::clear()
 	if(ToFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % ToSettingFilename).str());
 
-	FromFiles.clear();
-	ToFiles.clear();
+	BackupFilePairs.clear();
 }
 
 void dfs_backupper::setting::list() const
@@ -146,12 +146,11 @@ void dfs_backupper::setting::read()
 
 void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 {
-	if(find(BackupFilePairs.begin(), BackupFilePairs.end(), make_pair(from, to)) == BackupFilePairs.end())
+	auto i = find(BackupFilePairs.begin(), BackupFilePairs.end(), make_pair(from, to));
+	if(i == BackupFilePairs.end())
 		throw dfs_backupper::exception{L"not found the setting"};
 
-	auto FromFailed	= (FromFiles.erase(from_it) == FromFiles.end());
-	auto ToFailed	= (ToFiles.erase(to_it) == ToFiles.end());
-	if(FromFailed || ToFailed)
+	if(BackupFilePairs.erase(i) == BackupFilePairs.end())
 		throw dfs_backupper::exception{L"failed remove"};
 
 	write();
