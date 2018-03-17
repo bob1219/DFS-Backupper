@@ -18,7 +18,7 @@ namespace dfs_backupper
 		FileSetting(FileSetting&&) = default;
 
 		FileSetting& operator=(const FileSetting&) = default;
-		FileSetting& operator=(FileSetting&) = default;
+		FileSetting& operator=(FileSetting&&) = default;
 
 		void run() const override;
 	};
