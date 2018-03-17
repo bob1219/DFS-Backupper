@@ -14,6 +14,12 @@ namespace dfs_backupper
 	{
 	public:
 		DirSetting(const std::wstring& setting_name) { open(setting_name, SettingType::DIRECTORY); }
+		DirSetting(const DirSetting&) = default;
+		DirSetting(DirSetting&&) = default;
+
+		DirSetting& operator=(const DirSetting&) = default;
+		DirSetting& operator=(DirSetting&&) = default;
+
 		void run() const override;
 	};
 }
