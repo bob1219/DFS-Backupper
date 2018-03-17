@@ -4,7 +4,7 @@
 
 // header
 #include "function.h"
-#include "class.h"
+#include "exception.h"
 
 // using
 using namespace std;
