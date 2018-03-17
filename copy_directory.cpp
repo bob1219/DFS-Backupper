@@ -36,9 +36,8 @@ void dfs_backupper::copy_directory(const wstring& _from, const wstring& _to)
 	{
 		if(FromDirectoryFiles.find(p.filename().wstring()) == FromDirectoryFiles.end())
 			remove(p);
-		else if(is_directory(p))
-			dfs_backupper::copy_directory(from + PATH_BREAK_CHARACTER + p.filename().wstring(), p.wstring());
-		else
-			dfs_backupper::copy_file(from + PATH_BREAK_CHARACTER + p.filename().wstring(), p.wstring());
 	});
+
+	for(const auto& FromDirectoryFile: FromDirectoryFiles)
+		dfs_backupper::copy_file(from + PATH_BREAK_CHARACTER + FromDirectoryFile, to + PATH_BREAK_CHARACTER + FromDirectoryFile);
 }
