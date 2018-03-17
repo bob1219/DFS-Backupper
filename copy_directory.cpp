@@ -18,7 +18,7 @@ using namespace boost;
 
 void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 {
-	wstring to(_to);
+	auto to = _to;
 	if(*(to.end() - 1) == PATH_BREAK_CHARACTER)
 		to = to.substr(0, to.size() - 1);
 
@@ -26,10 +26,10 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 		remove_all(to);
 	boost::filesystem::copy_directory(from, to);
 
-	for_each(directory_iterator(from), directory_iterator(), [&](const wpath& p)
+	for_each(directory_iterator{from}, directory_iterator{}, [&](const auto& p)
 	{
-		const wstring filename(p.filename().wstring());
-		const wstring ToFile((wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str());
+		const auto filename = p.filename().wstring();
+		const auto ToFile = (wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str();
 
 		if(is_regular_file(p))
 			dfs_backupper::copy_file(p.wstring(), ToFile);
