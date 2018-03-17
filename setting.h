@@ -1,9 +1,10 @@
-#ifndef CLASS_H
-#define CLASS_H
+#ifndef SETTING_H
+#define SETTING_H
 
 // standard library
 #include <string>
 #include <vector>
+#include <utility>
 
 // header
 #include "constant.h"
@@ -27,32 +28,7 @@ namespace dfs_backupper
 		void write() const;
 
 	protected:
-		std::vector<std::wstring> FromFiles;
-		std::vector<std::wstring> ToFiles;
-	};
-
-	class DirSetting : public setting
-	{
-	public:
-		DirSetting(const std::wstring& setting_name);
-		void run() const;
-	};
-
-	class FileSetting : public setting
-	{
-	public:
-		FileSetting(const std::wstring& setting_name);
-		void run() const;
-	};
-
-	class exception
-	{
-	public:
-		exception(const std::wstring& _message);
-		std::wstring getMessage() const { return message; }
-
-	private:
-		std::wstring message;
+		std::vector<std::pair<std::wstring, std::wstring>> BackupFilePairs;
 	};
 }
 

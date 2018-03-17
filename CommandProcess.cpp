@@ -4,14 +4,14 @@
 
 // header
 #include "function.h"
-#include "class.h"
+#include "exception.h"
 
 // using
 using namespace std;
 
 void dfs_backupper::CommandProcess(const vector<wstring>& args)
 {
-	auto arg_error = [](){ throw dfs_backupper::exception(L"few or many arguments"); };
+	auto arg_error = [](){ throw dfs_backupper::exception{L"few or many arguments"}; };
 
 	if(args.at(1) == L"clear")
 	{
@@ -43,5 +43,5 @@ void dfs_backupper::CommandProcess(const vector<wstring>& args)
 			arg_error();
 		command::remove(args.at(2), args.at(3), args.at(4), args.at(5));
 	}
-	else throw dfs_backupper::exception(L"unknown command");
+	else throw dfs_backupper::exception{L"unknown command"};
 }
