@@ -24,7 +24,7 @@ void dfs_backupper::copy_file(const wstring& from, const wstring& to)
 		Time ToFileLastUpdate{last_write_time(to)};
 		if(ToFileLastUpdate > FromFileLastUpdate)
 		{
-			wcout << wformat(L"not need update:\t%1% -> %2%") % from % to << endl;
+			wcout << wformat{L"not need update:\t%1% -> %2%"} % from % to << endl;
 			return;
 		}
 	}
@@ -35,9 +35,9 @@ void dfs_backupper::copy_file(const wstring& from, const wstring& to)
 	}
 	catch(...)
 	{
-		wcerr << wformat(L"failed:\t\t\t%1% -> %2%") % from % to << endl;
+		wcerr << wformat{L"failed:\t\t\t%1% -> %2%"} % from % to << endl;
 		return;
 	}
 	
-	wcout << wformat(L"successful:\t\t%1% -> %2%") % from % to << endl;
+	wcout << wformat{L"successful:\t\t%1% -> %2%"} % from % to << endl;
 }

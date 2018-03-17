@@ -29,7 +29,7 @@ void dfs_backupper::copy_directory(const wstring& from, const wstring& _to)
 	for_each(directory_iterator{from}, directory_iterator{}, [&](const auto& p)
 	{
 		const auto filename = p.filename().wstring();
-		const auto ToFile = (wformat(L"%1%%2%%3%") % to % PATH_BREAK_CHARACTER % filename).str();
+		const auto ToFile = (wformat{L"%1%%2%%3%"} % to % PATH_BREAK_CHARACTER % filename).str();
 
 		if(is_regular_file(p))
 			dfs_backupper::copy_file(p.wstring(), ToFile);
