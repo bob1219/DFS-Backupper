@@ -97,3 +97,6 @@ History
 
 * 5.0 (March 17th, 2018)
 	* Apply effecient backup to directory backup
+
+* 5.1 (March 18th, 2018)
+	* Modify designs
