@@ -9,7 +9,7 @@ namespace dfs_backupper
 		FILE
 	};
 
-	static const wchar_t PATH_BREAK_CHARACTER = L'\\';
+	static constexpr wchar_t PATH_BREAK_CHARACTER = L'\\';
 }
 
 #endif
