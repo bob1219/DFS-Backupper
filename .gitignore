@@ -4,4 +4,3 @@ makefile
 *.lib
 settings/*
 !.gitkeep
-*.cmd
