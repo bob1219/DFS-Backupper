@@ -41,7 +41,7 @@ int wmain(int argc, wchar_t** argv)
 		}
 
 		vector<wstring> args;
-		args.assign(begin(argv), end(argv));
+		args.assign(argv, argv + argc);
 		CommandProcess(args);
 
 		return EXIT_SUCCESS;

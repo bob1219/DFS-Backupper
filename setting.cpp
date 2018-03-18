@@ -41,7 +41,7 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingType type)
 
 void dfs_backupper::setting::clear()
 {
-	const auto SettingDirectory = FromSettingFilename.parent_path();
+	const auto SettingDirectory = wpath{FromSettingFilename}.parent_path();
 	if(!is_directory(SettingDirectory)) // Create setting-directory If It's not exists
 	{
 		try
