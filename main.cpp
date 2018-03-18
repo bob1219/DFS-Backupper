@@ -27,11 +27,13 @@ int wmain(int argc, wchar_t** argv)
 {
 	try
 	{
+		// Setting locale
 		wcout.imbue(locale{""});
 		wcerr.imbue(locale{""});
 		wcin.imbue(locale{""});
 		setlocale(LC_ALL, "");
 
+		// Usage
 		if(argc == 1)
 		{
 			wcerr << wformat{L"usage: %1% [command] <arguments>"} % argv[0] << endl;
@@ -40,13 +42,13 @@ int wmain(int argc, wchar_t** argv)
 
 		vector<wstring> args;
 		args.assign(begin(argv), end(argv));
-
 		CommandProcess(args);
 
 		return EXIT_SUCCESS;
 	}
 	catch(boost::system::system_error& e)
 	{
+		// Convert error message from Multi-Byte-String to Wide-String
 		const auto		mess_c		= e.what();
 		const auto		mess_len	= strlen(mess_c);
 		unique_ptr<wchar_t[]>	mess{new wchar_t[mess_len + 1]};
@@ -58,6 +60,7 @@ int wmain(int argc, wchar_t** argv)
 	}
 	catch(std::exception& e)
 	{
+		// Convert error message from Multi-Byte-String to Wide-String
 		const auto		mess_c		= e.what();
 		const auto		mess_len	= strlen(mess_c);
 		unique_ptr<wchar_t[]>	mess{new wchar_t[mess_len + 1]};
