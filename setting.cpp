@@ -41,36 +41,25 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingType type)
 
 void dfs_backupper::setting::clear()
 {
-	const auto FromSettingFile_ParentPath = wpath{FromSettingFilename}.parent_path();
-	if(!is_directory(FromSettingFile_ParentPath))
+	const auto SettingDirectory = FromSettingFilename.parent_path();
+	if(!is_directory(SettingDirectory)) // Create setting-directory If It's not exists
 	{
 		try
 		{
-			create_directory(FromSettingFile_ParentPath);
+			create_directory(SettingDirectory);
 		}
 		catch(...)
 		{
-			throw dfs_backupper::exception((wformat{L"failed create a directory \"%1%\""} % FromSettingFile_ParentPath).str());
+			throw dfs_backupper::exception((wformat{L"failed create a directory \"%1%\""} % SettingDirectory.wstring()).str());
 		}
 	}
 
+	// Clear from-setting-file
 	std::wofstream FromFile{FromSettingFilename};
 	if(FromFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % FromSettingFilename).str());
 
-	const auto ToSettingFile_ParentPath = wpath{ToSettingFilename}.parent_path();
-	if(!is_directory(ToSettingFile_ParentPath))
-	{
-		try
-		{
-			create_directory(ToSettingFile_ParentPath);
-		}
-		catch(...)
-		{
-			throw dfs_backupper::exception((wformat{L"failed create a directory \"%1%\""} % ToSettingFile_ParentPath).str());
-		}
-	}
-
+	// Clear to-setting-file
 	std::wofstream ToFile{ToSettingFilename};
 	if(ToFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % ToSettingFilename).str());
@@ -87,7 +76,8 @@ void dfs_backupper::setting::list() const
 void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
 {
 	const auto BackupFilePair = make_pair(FromSettingFilename, ToSettingFilename);
-	if(find(BackupFilePairs.begin(), BackupFilePairs.end(), BackupFilePair) != BackupFilePairs.end()) // exists same setting
+	const auto BackupFilePairsEnd = end(BackupFilePairs);
+	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd) // exists same setting
 		throw dfs_backupper::exception{L"exists same setting"};
 
 	BackupFilePairs.push_back(BackupFilePair);
@@ -96,12 +86,14 @@ void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstri
 
 void dfs_backupper::setting::write() const
 {
+	// Open from-setting-file
 	std::wofstream FromSettingFile;
 	FromSettingFile.imbue(locale{""});
 	FromSettingFile.open(FromSettingFilename);
 	if(FromSettingFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed open file \"%1%\""} % FromSettingFilename).str());
 
+	// Open to-setting-file
 	std::wofstream ToSettingFile;
 	ToSettingFile.imbue(locale{""});
 	ToSettingFile.open(ToSettingFilename);
@@ -110,19 +102,21 @@ void dfs_backupper::setting::write() const
 
 	for(const auto& BackupFilePair: BackupFilePairs)
 	{
-		FromSettingFile << BackupFilePair.first << endl;
-		ToSettingFile << BackupFilePair.second << endl;
+		FromSettingFile << BackupFilePair.first << endl;	// Write from-setting
+		ToSettingFile << BackupFilePair.second << endl;		// Write to-setting
 	}
 }
 
 void dfs_backupper::setting::read()
 {
+	// Open from-setting-file
 	std::wifstream FromSettingFile;
 	FromSettingFile.imbue(locale{""});
 	FromSettingFile.open(FromSettingFilename);
 	if(FromSettingFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed open file \"%1%\""} % FromSettingFilename).str());
 
+	// Open to-setting-file
 	std::wifstream ToSettingFile;
 	ToSettingFile.imbue(locale{""});
 	ToSettingFile.open(ToSettingFilename);
@@ -134,10 +128,10 @@ void dfs_backupper::setting::read()
 		wstring FromSetting;
 		wstring ToSetting;
 
-		if(!getline(FromSettingFile, FromSetting))
+		if(!getline(FromSettingFile, FromSetting))	// Read a from-setting
 			break;
 
-		if(!getline(ToSettingFile, ToSetting))
+		if(!getline(ToSettingFile, ToSetting))		// Read a to-setting
 			break;
 
 		BackupFilePairs.push_back(make_pair(FromSetting, ToSetting));
@@ -147,10 +141,11 @@ void dfs_backupper::setting::read()
 void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 {
 	auto i = find(BackupFilePairs.begin(), BackupFilePairs.end(), make_pair(from, to));
-	if(i == BackupFilePairs.end())
+	if(i == BackupFilePairs.end())	// not found
 		throw dfs_backupper::exception{L"not found the setting"};
 
-	if(BackupFilePairs.erase(i) == BackupFilePairs.end())
+	// Remove
+	if(BackupFilePairs.erase(i) == BackupFilePairs.end()) // failed
 		throw dfs_backupper::exception{L"failed remove"};
 
 	write();
