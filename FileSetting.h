@@ -13,10 +13,12 @@ namespace dfs_backupper
 	class FileSetting : public setting
 	{
 	public:
+		// Constructors
 		FileSetting(const std::wstring& setting_name) { open(setting_name, SettingType::FILE); }
 		FileSetting(const FileSetting&) = default;
 		FileSetting(FileSetting&&) = default;
 
+		// Operator
 		FileSetting& operator=(const FileSetting&) = default;
 		FileSetting& operator=(FileSetting&&) = default;
 

@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <unordered_set>
+#include <iterator>
 
 // boost
 #include <boost/filesystem.hpp>
@@ -21,13 +22,13 @@ void dfs_backupper::copy_directory(const wstring& _from, const wstring& _to)
 {
 	// Remove last character of to-filename If it's path-break-character
 	auto to = _to;
-	if(*(to.end() - 1) == PATH_BREAK_CHARACTER)
-		to = to.substr(0, to.size() - 1);
+	if(*(std::end(to) - 1) == PATH_BREAK_CHARACTER)
+		to = to.substr(0, distance(std::begin(to), std::end(to) - 2));
 
 	// Remove last character of from-filename If it's path-break-character
 	auto from = _from;
-	if(*(from.end() - 1) == PATH_BREAK_CHARACTER)
-		from = from.substr(0, from.size() - 1);
+	if(*(std::end(from) - 1) == PATH_BREAK_CHARACTER)
+		from = from.substr(0, distance(std::begin(from), std::end(from) - 2));
 
 	// Create to-directory If it's not exists
 	if(!is_directory(to))
