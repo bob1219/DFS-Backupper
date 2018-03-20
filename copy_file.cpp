@@ -22,7 +22,7 @@ void dfs_backupper::copy_file(const wstring& from, const wstring& to)
 	{
 		const Time FromFileLastUpdate{last_write_time(from)};
 		const Time ToFileLastUpdate{last_write_time(to)};
-		if(difftime(FromFileLastUpdate >= ToFileLastUpdate) // It's not need update Because It's backed up
+		if(FromFileLastUpdate >= ToFileLastUpdate) // It's not need update Because It's backed up
 		{
 			wcout << wformat{L"not need update:\t%1% -> %2%"} % from % to << endl;
 			return;
