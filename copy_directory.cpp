@@ -22,13 +22,13 @@ void dfs_backupper::copy_directory(const wstring& _from, const wstring& _to)
 {
 	// Remove last character of to-filename If it's path-break-character
 	auto to = _to;
-	if(*(end(to) - 1) == PATH_BREAK_CHARACTER)
-		to = to.substr(0, distance(begin(to), end(to) - 2));
+	if(*(std::end(to) - 1) == PATH_BREAK_CHARACTER)
+		to = to.substr(0, distance(std::begin(to), std::end(to) - 2));
 
 	// Remove last character of from-filename If it's path-break-character
 	auto from = _from;
-	if(*(end(from) - 1) == PATH_BREAK_CHARACTER)
-		from = from.substr(0, distance(begin(from), end(from) - 2));
+	if(*(std::end(from) - 1) == PATH_BREAK_CHARACTER)
+		from = from.substr(0, distance(std::begin(from), std::end(from) - 2));
 
 	// Create to-directory If it's not exists
 	if(!is_directory(to))
