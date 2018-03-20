@@ -100,3 +100,6 @@ History
 
 * 5.1 (March 18th, 2018)
 	* Modify designs
+
+* 5.2 (March 20th, 2018)
+	* Modify designs
