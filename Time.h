@@ -47,24 +47,24 @@ namespace dfs_backupper
 		Time& operator=(std::tm* data) { this->data = data; time = std::mktime(data); return *this; }
 
 		void update() noexcept { time = std::time(nullptr); data = std::localtime(&time); }
-		int year() const noexcept { return data->tm_year + 1900; }
-		int month() const noexcept { return data->tm_mon + 1; }
-		int day() const noexcept { return data->tm_mday; }
-		int hour() const noexcept { return data->tm_hour; }
-		int min() const noexcept { return data->tm_min; }
-		int sec() const noexcept { return data->tm_sec; }
+		auto year() const noexcept { return data->tm_year + 1900; }
+		auto month() const noexcept { return data->tm_mon + 1; }
+		auto day() const noexcept { return data->tm_mday; }
+		auto hour() const noexcept { return data->tm_hour; }
+		auto min() const noexcept { return data->tm_min; }
+		auto sec() const noexcept { return data->tm_sec; }
 		boost::logic::tribool isSummerTime() const;
 		DayOfWeek getDayOfWeek() const noexcept;
-		std::time_t getTime() const noexcept { return time; }
-		std::tm* getData() const noexcept { return data; }
+		auto getTime() const noexcept { return time; }
+		auto getData() const noexcept { return data; }
 	};
 
-	inline bool operator>(const Time& left, const Time& right) { return difftime(left.getTime(), right.getTime()) > 0; }
-	inline bool operator<(const Time& left, const Time& right) { return difftime(left.getTime(), right.getTime()) < 0; }
-	inline bool operator==(const Time& left, const Time& right) { return difftime(left.getTime(), right.getTime()) == 0; }
-	inline bool operator!=(const Time& left, const Time& right) { return !(left == right); }
-	inline bool operator>=(const Time& left, const Time& right) { return !(left < right); }
-	inline bool operator<=(const Time& left, const Time& right) { return !(left > right); }
+	inline auto operator>(const Time& left, const Time& right) { return difftime(left.getTime(), right.getTime()) > 0; }
+	inline auto operator<(const Time& left, const Time& right) { return difftime(left.getTime(), right.getTime()) < 0; }
+	inline auto operator==(const Time& left, const Time& right) { return difftime(left.getTime(), right.getTime()) == 0; }
+	inline auto operator!=(const Time& left, const Time& right) { return !(left == right); }
+	inline auto operator>=(const Time& left, const Time& right) { return !(left < right); }
+	inline auto operator<=(const Time& left, const Time& right) { return !(left > right); }
 }
 
 #endif

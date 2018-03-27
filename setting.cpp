@@ -146,7 +146,7 @@ void dfs_backupper::setting::read()
 
 void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 {
-	auto i = find(BackupFilePairs.begin(), BackupFilePairs.end(), make_pair(from, to));
+	const auto i = find(BackupFilePairs.begin(), BackupFilePairs.end(), make_pair(from, to));
 	if(i == BackupFilePairs.end())	// not found
 		throw dfs_backupper::exception{L"not found the setting"};
 

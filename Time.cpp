@@ -13,7 +13,7 @@ using namespace std;
 
 tribool dfs_cls::Time::isSummerTime() const
 {
-	int flag = data->tm_isdst;
+	const auto flag = data->tm_isdst;
 	if(flag > 0)
 		return true;
 	else if(flag == 0)

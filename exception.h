@@ -22,7 +22,7 @@ namespace dfs_backupper
 		exception& operator=(const exception&) = default;
 		exception& operator=(exception&&) = default;
 
-		std::wstring getMessage() { return message; }
+		const auto getMessage() { return message; }
 
 	private:
 		std::wstring message;

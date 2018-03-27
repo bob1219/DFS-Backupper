@@ -15,7 +15,7 @@ namespace dfs_backupper
 		FILE
 	};
 
-	static constexpr wchar_t PATH_BREAK_CHARACTER = L'\\';
+	static constexpr auto PATH_BREAK_CHARACTER = L'\\';
 }
 
 #endif
