@@ -1,3 +1,6 @@
+// standard library
+#include <array>
+
 // boost
 #include <boost/logic/tribool.hpp>
 
@@ -6,6 +9,7 @@
 
 // using
 using namespace boost::logic;
+using namespace std;
 
 tribool dfs_cls::Time::isSummerTime() const
 {
@@ -16,4 +20,14 @@ tribool dfs_cls::Time::isSummerTime() const
 		return false;
 	else
 		return indeterminate;
+}
+
+dfs_cls::Time::DayOfWeek dfs_cls::Time::getDayOfWeek() const noexcept
+{
+	constexpr auto NumberOfDaysInWeek = 7;
+	array<DayOfWeek, NumberOfDaysInWeek> a;
+	for(auto i = 0; i < NumberOfDaysInWeek; ++i)
+		a.at(i) = static_cast<DayOfWeek>(i);
+
+	return a.at(data->tm_wday);
 }
