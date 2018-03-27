@@ -47,7 +47,7 @@ void dfs_backupper::command::list(const wstring& setting_name)
 	fileSetting.list();
 }
 
-void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest)
 {
 	unique_ptr<setting> Setting;
 	if(option == L"-d")		// directory setting
@@ -58,7 +58,7 @@ void dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 
 	// Run
 	Setting->read();
-	Setting->add(from, to);
+	Setting->add(source, dest);
 }
 
 void dfs_backupper::command::run(const wstring& setting_name)
@@ -74,7 +74,7 @@ void dfs_backupper::command::run(const wstring& setting_name)
 	fileSetting.run();
 }
 
-void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest)
 {
 	unique_ptr<setting> Setting;
 	if(option == L"-d")		// directory setting
@@ -85,5 +85,5 @@ void dfs_backupper::command::remove(const wstring& setting_name, const wstring& 
 
 	// Run
 	Setting->read();
-	Setting->remove(from, to);
+	Setting->remove(source, dest);
 }
