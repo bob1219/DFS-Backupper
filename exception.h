@@ -15,7 +15,7 @@ namespace dfs_backupper
 	class exception
 	{
 	public:
-		exception(const std::wstring& _message) : message{_message} {}
+		explicit exception(const std::wstring& _message) : message{_message} {}
 		exception(const exception&) = default;
 		exception(exception&&) = default;
 
