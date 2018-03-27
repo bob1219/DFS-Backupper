@@ -10,6 +10,9 @@
 // standard library
 #include <ctime>
 
+// boost
+#include <boost/logic/tribool.hpp>
+
 namespace dfs_backupper
 {
 	class Time
@@ -19,6 +22,17 @@ namespace dfs_backupper
 		std::tm*	data;
 
 	public:
+		enum class DayOfWeek
+		{
+			SUNDAY,
+			MONDAY,
+			TUESDAY,
+			WEDNESDAY,
+			THURSDAY,
+			FRIDAY,
+			SATURDAY
+		};
+
 		// Constructors
 		Time() { update(); }
 		Time(std::time_t _time) : time{_time}, data{} {}
@@ -29,6 +43,8 @@ namespace dfs_backupper
 		// Operators
 		Time& operator=(const Time&) = default;
 		Time& operator=(Time&&) = default;
+		Time& operator=(std::time_t time) { this->time = time; data = std::localtime(&(this->time)); return *this; }
+		Time& operator=(std::tm* data) { this->data = data; time = std::mktime(data); return *this; }
 
 		void update() noexcept { time = std::time(nullptr); data = std::localtime(&time); }
 		int year() const noexcept { return data->tm_year + 1900; }
@@ -37,6 +53,8 @@ namespace dfs_backupper
 		int hour() const noexcept { return data->tm_hour; }
 		int min() const noexcept { return data->tm_min; }
 		int sec() const noexcept { return data->tm_sec; }
+		boost::logic::tribool isSummerTime() const;
+		DayOfWeek getDayOfWeek() const noexcept;
 		std::time_t getTime() const noexcept { return time; }
 		std::tm* getData() const noexcept { return data; }
 	};
