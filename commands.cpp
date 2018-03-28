@@ -1,3 +1,9 @@
+// commands.cpp
+// Copyright 2018 Daiki Yoshida. All rights reserved.
+// This file is a source file in DFS-Backupper project.
+// This file and DFS-Backupper project are licensed by GNU-GPL v3.0.
+// You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
+
 // standard library
 #include <string>
 #include <iostream>
@@ -41,7 +47,7 @@ void dfs_backupper::command::list(const wstring& setting_name)
 	fileSetting.list();
 }
 
-void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest)
 {
 	unique_ptr<setting> Setting;
 	if(option == L"-d")		// directory setting
@@ -52,7 +58,7 @@ void dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 
 	// Run
 	Setting->read();
-	Setting->add(from, to);
+	Setting->add(source, dest);
 }
 
 void dfs_backupper::command::run(const wstring& setting_name)
@@ -68,7 +74,7 @@ void dfs_backupper::command::run(const wstring& setting_name)
 	fileSetting.run();
 }
 
-void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& from, const wstring& to)
+void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest)
 {
 	unique_ptr<setting> Setting;
 	if(option == L"-d")		// directory setting
@@ -79,5 +85,5 @@ void dfs_backupper::command::remove(const wstring& setting_name, const wstring& 
 
 	// Run
 	Setting->read();
-	Setting->remove(from, to);
+	Setting->remove(source, dest);
 }

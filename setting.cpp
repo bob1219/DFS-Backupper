@@ -1,3 +1,9 @@
+// setting.cpp
+// Copyright 2018 Daiki Yoshida. All rights reserved.
+// This file is a source file in DFS-Backupper project.
+// This file and DFS-Backupper project are licensed by GNU-GPL v3.0.
+// You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
+
 // standard library
 #include <string>
 #include <iostream>
@@ -73,9 +79,9 @@ void dfs_backupper::setting::list() const
 		wcout << wformat{L"%1% -> %2%"} % BackupFilePair.first % BackupFilePair.second << endl;
 }
 
-void dfs_backupper::setting::add(const wstring& FromSettingFilename, const wstring& ToSettingFilename)
+void dfs_backupper::setting::add(const wstring& SourceSettingFilename, const wstring& DestSettingFilename)
 {
-	const auto BackupFilePair = make_pair(FromSettingFilename, ToSettingFilename);
+	const auto BackupFilePair = make_pair(SourceSettingFilename, DestSettingFilename);
 	const auto BackupFilePairsEnd = end(BackupFilePairs);
 	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd) // exists same setting
 		throw dfs_backupper::exception{L"exists same setting"};
@@ -140,12 +146,12 @@ void dfs_backupper::setting::read()
 
 void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 {
-	auto i = find(BackupFilePairs.begin(), BackupFilePairs.end(), make_pair(from, to));
+	const auto i = find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(from, to));
 	if(i == BackupFilePairs.end())	// not found
 		throw dfs_backupper::exception{L"not found the setting"};
 
 	// Remove
-	if(BackupFilePairs.erase(i) == BackupFilePairs.end()) // failed
+	if(BackupFilePairs.erase(i) == end(BackupFilePairs)) // failed
 		throw dfs_backupper::exception{L"failed remove"};
 
 	write();
