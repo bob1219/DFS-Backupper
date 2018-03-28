@@ -7,6 +7,7 @@ Development Environment
 * Operating System: Microsoft Windows 10
 * Programming Language: C++
 * Builder: Microsoft Visual Studio 2017
+* Makefile: Microsoft nmake
 
 Usage
 -----
@@ -71,6 +72,8 @@ Files
 * Other
 	* .gitignore
 	* LICENSE
+	* boost/
+	* makefile
 
 History
 -------
@@ -103,3 +106,12 @@ History
 
 * 5.2 (March 20th, 2018)
 	* Modify designs
+
+* 5.3 (March 28th, 2018)
+	* Modify designs
+
+License
+-------
+Copyright 2018 Daiki Yoshida. All rights reserved.
+This program and its source file and header file are licensed by GNU-GPL v3.0.
+You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
