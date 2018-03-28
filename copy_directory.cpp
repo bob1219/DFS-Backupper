@@ -35,7 +35,7 @@ void dfs_backupper::copy_directory(const wstring& _sourceDirname, const wstring&
 	const wstring SourceDirname{std::begin(_sourceDirname), (*(EndOfSourceDirname - 1) == PATH_BREAK_CHARACTER) ? (EndOfSourceDirname - 1) : EndOfSourceDirname};
 
 	// Create to-directory If it's not exists
-	if(!is_directory(to))
+	if(!is_directory(DestDirname))
 		copy_directory(SourceDirname, DestDirname);
 
 	// Remove not exists in source-directory files on to-directiry
