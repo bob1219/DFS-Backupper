@@ -1,6 +1,4 @@
 *.txt
-makefile
 *.obj
-*.lib
 settings/*
 !.gitkeep
