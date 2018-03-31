@@ -110,6 +110,9 @@ History
 * 5.3 (March 28th, 2018)
 	* Modify designs
 
+* 5.4 (March 31st, 2018)
+	* Modify designs
+
 License
 -------
 Copyright 2018 Daiki Yoshida. All rights reserved.
