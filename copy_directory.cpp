@@ -24,21 +24,23 @@ using namespace std;
 using namespace boost::filesystem;
 using namespace boost;
 
-void dfs_backupper::copy_directory(const wstring& _sourceDirname, const wstring& _destDirname)
+void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& destDirname)
 {
-	// Remove last character of to-dirname If it's path-break-character
-	const auto EndOfDestDirname = std::end(_destDirname);
-	const wstring DestDirname{std::begin(_destDirname), (*(EndOfDestDirname - 1) == PATH_BREAK_CHARACTER) ? (EndOfDestDirname - 1) : EndOfDestDirname};
+	const auto EndOfDestDirname{std::end(destDirname)};
+	const wstring DestDirname{std::begin(destDirname),
+		(*(EndOfDestDirname - 1) == PATH_BREAK_CHARACTER)
+			? (EndOfDestDirname - 1)
+			: EndOfDestDirname};
 
-	// Remove last character of source-dirname If it's path-break-character
-	const auto EndOfSourceDirname = std::end(_sourceDirname);
-	const wstring SourceDirname{std::begin(_sourceDirname), (*(EndOfSourceDirname - 1) == PATH_BREAK_CHARACTER) ? (EndOfSourceDirname - 1) : EndOfSourceDirname};
+	const auto EndOfSourceDirname{std::end(sourceDirname)};
+	const wstring SourceDirname{std::begin(sourceDirname)
+		(*(EndOfSourceDirname - 1) == PATH_BREAK_CHARACTER)
+			? (EndOfSourceDirname - 1)
+			: EndOfSourceDirname};
 
-	// Create to-directory If it's not exists
 	if(!is_directory(DestDirname))
 		copy_directory(SourceDirname, DestDirname);
 
-	// Remove not exists in source-directory files on to-directiry
 	unordered_set<wstring> FromDirectoryFiles;
 	for_each(directory_iterator{SourceDirname}, directory_iterator{}, [&](const wpath& p){ FromDirectoryFiles.insert(p.filename().wstring()); });
 	for_each(directory_iterator{DestDirname}, directory_iterator{}, [&](const wpath& p)

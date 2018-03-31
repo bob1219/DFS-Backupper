@@ -47,8 +47,8 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingType type)
 
 void dfs_backupper::setting::clear()
 {
-	const auto SettingDirectory = wpath{FromSettingFilename}.parent_path();
-	if(!is_directory(SettingDirectory)) // Create setting-directory If It's not exists
+	const auto SettingDirectory{wpath{FromSettingFilename}.parent_path()};
+	if(!is_directory(SettingDirectory))
 	{
 		try
 		{
@@ -60,12 +60,10 @@ void dfs_backupper::setting::clear()
 		}
 	}
 
-	// Clear from-setting-file
 	std::wofstream FromFile{FromSettingFilename};
 	if(FromFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % FromSettingFilename).str());
 
-	// Clear to-setting-file
 	std::wofstream ToFile{ToSettingFilename};
 	if(ToFile.fail())
 		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % ToSettingFilename).str());
@@ -81,9 +79,9 @@ void dfs_backupper::setting::list() const
 
 void dfs_backupper::setting::add(const wstring& SourceSettingFilename, const wstring& DestSettingFilename)
 {
-	const auto BackupFilePair = make_pair(SourceSettingFilename, DestSettingFilename);
-	const auto BackupFilePairsEnd = end(BackupFilePairs);
-	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd) // exists same setting
+	const auto BackupFilePair{make_pair(SourceSettingFilename, DestSettingFilename)};
+	const auto BackupFilePairsEnd{end(BackupFilePairs)};
+	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd)
 		throw dfs_backupper::exception{L"exists same setting"};
 
 	BackupFilePairs.push_back(BackupFilePair);
@@ -134,10 +132,10 @@ void dfs_backupper::setting::read()
 		wstring FromSetting;
 		wstring ToSetting;
 
-		if(!getline(FromSettingFile, FromSetting))	// Read a from-setting
+		if(!getline(FromSettingFile, FromSetting))
 			break;
 
-		if(!getline(ToSettingFile, ToSetting))		// Read a to-setting
+		if(!getline(ToSettingFile, ToSetting))
 			break;
 
 		BackupFilePairs.push_back(make_pair(FromSetting, ToSetting));
@@ -146,7 +144,7 @@ void dfs_backupper::setting::read()
 
 void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
 {
-	const auto i = find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(from, to));
+	const auto i{find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(from, to))};
 	if(i == BackupFilePairs.end())	// not found
 		throw dfs_backupper::exception{L"not found the setting"};
 
