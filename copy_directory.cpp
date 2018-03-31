@@ -33,7 +33,7 @@ void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& 
 			: EndOfDestDirname};
 
 	const auto EndOfSourceDirname{std::end(sourceDirname)};
-	const wstring SourceDirname{std::begin(sourceDirname)
+	const wstring SourceDirname{std::begin(sourceDirname),
 		(*(EndOfSourceDirname - 1) == PATH_BREAK_CHARACTER)
 			? (EndOfSourceDirname - 1)
 			: EndOfSourceDirname};
