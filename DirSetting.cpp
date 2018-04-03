@@ -4,10 +4,6 @@
 // This file and DFS-Backupper project are licensed by GNU-GPL v3.0.
 // You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-// standard library
-#include <cstddef>
-#include <string>
-
 // header
 #include "DirSetting.h"
 #include "function.h"
@@ -18,5 +14,5 @@ using namespace std;
 void dfs_backupper::DirSetting::run() const
 {
 	for(const auto& BackupFilePair: BackupFilePairs)
-		copy_directory(BackupFilePair.first, BackupFilePair.second);
+		dfs_backupper::copy_directory(BackupFilePair.first, BackupFilePair.second);
 }
