@@ -16,6 +16,9 @@
 
 namespace dfs_backupper
 {
+	// declaration
+	class LogFile;
+
 	class DirSetting : public setting
 	{
 	public:
@@ -29,7 +32,7 @@ namespace dfs_backupper
 		DirSetting& operator=(const DirSetting&) = default;
 		DirSetting& operator=(DirSetting&&) = default;
 
-		void run() const override;
+		void run(LogFile& log) const override;
 	};
 }
 

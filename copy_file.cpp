@@ -21,7 +21,7 @@ using namespace std;
 using namespace boost;
 using namespace boost::filesystem;
 
-void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& DestFilename)
+void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& DestFilename, LogFile& log)
 {
 	if(is_regular_file(DestFilename))
 	{
@@ -29,6 +29,7 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 		const auto ToFileLastUpdate{last_write_time(DestFilename)};
 		if(difftime(ToFileLastUpdate, FromFileLastUpdate) >= 0)
 		{
+			log << wformat{L"not need update: %1% -> %2%"} % SourceFilename % DestFilename << endl;
 			wcout << wformat{L"not need update:\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 			return;
 		}
@@ -40,9 +41,11 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 	}
 	catch(filesystem_error)
 	{
+		log << wformat{L"failed update: %1% -> %2%"} % SourceFilename % DestFilename << endl;
 		wcerr << wformat{L"failed:\t\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 		return;
 	}
 	
+	log << wformat{L"successful update: %1% -> %2%"} % SourceFilename % DestFilename << endl;
 	wcout << wformat{L"successful:\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 }

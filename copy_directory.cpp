@@ -16,13 +16,14 @@
 // header
 #include "function.h"
 #include "constant.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
 using namespace boost::filesystem;
 using namespace boost;
 
-void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& destDirname)
+void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& destDirname, LogFile& log)
 {
 	// Delete end character if it's path-break-character
 	const auto EndOfDestDirname{std::end(destDirname)};
@@ -42,15 +43,20 @@ void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& 
 		copy_directory(SourceDirname, DestDirname);
 
 	// Remove files in destination-directory what don't exists in source-directory
-	unordered_set<wstring> FromDirectoryFiles;
-	for_each(directory_iterator{SourceDirname}, directory_iterator{}, [&](const wpath& p){ FromDirectoryFiles.insert(p.filename().wstring()); });
+	unordered_set<wstring> SourceDirectoryFiles;
+	for_each(directory_iterator{SourceDirname}, directory_iterator{}, [&](const wpath& p){ SourceDirectoryFiles.insert(p.filename().wstring()); });
 	for_each(directory_iterator{DestDirname}, directory_iterator{}, [&](const wpath& p)
 	{
-		if(FromDirectoryFiles.find(p.filename().wstring()) == FromDirectoryFiles.end())
+		if(SourceDirectoryFiles.find(p.filename().wstring()) == SourceDirectoryFiles.end())
 			remove(p);
 	});
 
-	// Copy other files
-	for(const auto& FromDirectoryFile: FromDirectoryFiles)
-		dfs_backupper::copy_file(SourceDirname + PATH_BREAK_CHARACTER + FromDirectoryFile, DestDirname + PATH_BREAK_CHARACTER + FromDirectoryFile);
+	// Copy other files and directories
+	for(const auto& SourceDirectoryFile: SourceDirectoryFiles)
+	{
+		if(is_regular_file(SourceDirectoryFile))
+			dfs_backupper::copy_file(SourceDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, DestDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, log);
+		else
+			dfs_backupper::copy_directory(SourceDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, DestDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, log);
+	}
 }

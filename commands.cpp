@@ -14,26 +14,27 @@
 #include "DirSetting.h"
 #include "FileSetting.h"
 #include "exception.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
 
-void dfs_backupper::command::clear(const wstring& setting_name)
+void dfs_backupper::command::clear(const wstring& setting_name, LogFile& log)
 {
 	DirSetting dirSetting{setting_name};
 	FileSetting fileSetting{setting_name};
 
-	dirSetting.clear();
-	fileSetting.clear();
+	dirSetting.clear(log);
+	fileSetting.clear(log);
 }
 
-void dfs_backupper::command::list(const wstring& setting_name)
+void dfs_backupper::command::list(const wstring& setting_name, LogFile& log)
 {
 	DirSetting dirSetting{setting_name};
-	dirSetting.read();
+	dirSetting.read(log);
 
 	FileSetting fileSetting{setting_name};
-	fileSetting.read();
+	fileSetting.read(log);
 
 	// Print directory settings
 	wcout << L"directory:" << endl;
@@ -46,7 +47,7 @@ void dfs_backupper::command::list(const wstring& setting_name)
 	fileSetting.list();
 }
 
-void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest)
+void dfs_backupper::command::add(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest, LogFile& log)
 {
 	unique_ptr<setting> Setting;
 	if(option == L"-d")
@@ -55,23 +56,23 @@ void dfs_backupper::command::add(const wstring& setting_name, const wstring& opt
 		Setting.reset(new FileSetting{setting_name});
 	else throw dfs_backupper::exception{L"unknown option"};
 
-	Setting->read();
-	Setting->add(source, dest);
+	Setting->read(log);
+	Setting->add(source, dest, log);
 }
 
-void dfs_backupper::command::run(const wstring& setting_name)
+void dfs_backupper::command::run(const wstring& setting_name, LogFile& log)
 {
 	DirSetting dirSetting{setting_name};
-	dirSetting.read();
+	dirSetting.read(log);
 
 	FileSetting fileSetting{setting_name};
-	fileSetting.read();
+	fileSetting.read(log);
 
-	dirSetting.run();
-	fileSetting.run();
+	dirSetting.run(log);
+	fileSetting.run(log);
 }
 
-void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest)
+void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest, LogFile& log)
 {
 	unique_ptr<setting> Setting;
 	if(option == L"-d")
@@ -80,6 +81,6 @@ void dfs_backupper::command::remove(const wstring& setting_name, const wstring& 
 		Setting.reset(new FileSetting{setting_name});
 	else throw dfs_backupper::exception{L"unknown command"};
 
-	Setting->read();
-	Setting->remove(source, dest);
+	Setting->read(log);
+	Setting->remove(source, dest, log);
 }

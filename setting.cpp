@@ -31,20 +31,20 @@ void dfs_backupper::setting::open(const wstring& setting_name, SettingType type)
 	switch(type)
 	{
 	case SettingType::DIRECTORY:
-		FromSettingFilename	= (wformat{L".%1%settings%1%%2%%1%DIR_FROM"} % PATH_BREAK_CHARACTER % setting_name).str();
-		ToSettingFilename	= (wformat{L".%1%settings%1%%2%%1%DIR_TO"} % PATH_BREAK_CHARACTER % setting_name).str();
+		SourceSettingFilename	= (wformat{L".%1%settings%1%%2%%1%DIR_SOURCE"} % PATH_BREAK_CHARACTER % setting_name).str();
+		DestSettingFilename	= (wformat{L".%1%settings%1%%2%%1%DIR_DEST"} % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 
 	case SettingType::FILE:
-		FromSettingFilename	= (wformat{L".%1%settings%1%%2%%1%FILE_FROM"} % PATH_BREAK_CHARACTER % setting_name).str();
-		ToSettingFilename	= (wformat{L".%1%settings%1%%2%%1%FILE_TO"} % PATH_BREAK_CHARACTER % setting_name).str();
+		SourceSettingFilename	= (wformat{L".%1%settings%1%%2%%1%FILE_SOURCE"} % PATH_BREAK_CHARACTER % setting_name).str();
+		DestSettingFilename	= (wformat{L".%1%settings%1%%2%%1%FILE_DEST"} % PATH_BREAK_CHARACTER % setting_name).str();
 		break;
 	}
 }
 
-void dfs_backupper::setting::clear()
+void dfs_backupper::setting::clear(LogFile& log)
 {
-	const auto SettingDirectory{wpath{FromSettingFilename}.parent_path()};
+	const auto SettingDirectory{wpath{SourceSettingFilename}.parent_path()};
 	if(!is_directory(SettingDirectory))
 	{
 		try
@@ -53,19 +53,28 @@ void dfs_backupper::setting::clear()
 		}
 		catch(...)
 		{
-			throw dfs_backupper::exception((wformat{L"failed create a directory \"%1%\""} % SettingDirectory.wstring()).str());
+			wstring SettingDirectoryName{SettingDirectory.wstring()};
+			log << L"error: failed create setting directory" << endl;
+			throw dfs_backupper::exception{L"failed create setting directory"};
 		}
 	}
 
-	std::wofstream FromFile{FromSettingFilename};
-	if(FromFile.fail())
-		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % FromSettingFilename).str());
+	std::wofstream SourceSettingFile{SourceSettingFilename};
+	if(SourceSettingFile.fail())
+	{
+		log << L"error: failed clear source-setting-file" << endl;
+		throw dfs_backupper::exception{L"failed clear source-setting-file"};
+	}
 
-	std::wofstream ToFile{ToSettingFilename};
-	if(ToFile.fail())
-		throw dfs_backupper::exception((wformat{L"failed clear a file \"%1%\""} % ToSettingFilename).str());
+	std::wofstream DestSettingFile{DestSettingFilename};
+	if(DestSettingFile.fail())
+	{
+		log << L"error: failed clear destination-setting-file" << endl;
+		throw dfs_backupper::exception{L"failed clear destination-setting-file"};
 
 	BackupFilePairs.clear();
+
+	log << L"successful clear settings" << endl;
 }
 
 void dfs_backupper::setting::list() const
@@ -74,81 +83,107 @@ void dfs_backupper::setting::list() const
 		wcout << wformat{L"%1% -> %2%"} % BackupFilePair.first % BackupFilePair.second << endl;
 }
 
-void dfs_backupper::setting::add(const wstring& SourceSettingFilename, const wstring& DestSettingFilename)
+void dfs_backupper::setting::add(const wstring& SourceSettingFilename, const wstring& DestSettingFilename, LogFile& log)
 {
 	// Check exists same setting
 	const auto BackupFilePair{make_pair(SourceSettingFilename, DestSettingFilename)};
 	const auto BackupFilePairsEnd{end(BackupFilePairs)};
 	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd)
+	{
+		log << L"error: exists same setting" << endl;
 		throw dfs_backupper::exception{L"exists same setting"};
+	}
 
 	BackupFilePairs.push_back(BackupFilePair);
-	write();
+	write(log);
+
+	log << L"successful addition a setting" << endl;
 }
 
-void dfs_backupper::setting::write() const
+void dfs_backupper::setting::write(LogFile& log) const
 {
-	// Open from-setting-file
-	std::wofstream FromSettingFile;
-	FromSettingFile.imbue(locale{""});
-	FromSettingFile.open(FromSettingFilename);
-	if(FromSettingFile.fail())
-		throw dfs_backupper::exception((wformat{L"failed open file \"%1%\""} % FromSettingFilename).str());
+	// Open source-setting-file
+	std::wofstream SourceSettingFile;
+	SourceSettingFile.imbue(locale{""});
+	SourceSettingFile.open(SourceSettingFilename);
+	if(SourceSettingFile.fail())
+	{
+		log << L"error: failed open source-setting-file" << endl;
+		throw dfs_backupper::exception{L"failed open source-setting-file"};
+	}
 
-	// Open to-setting-file
-	std::wofstream ToSettingFile;
-	ToSettingFile.imbue(locale{""});
-	ToSettingFile.open(ToSettingFilename);
-	if(ToSettingFile.fail())
-		throw dfs_backupper::exception((wformat{L"failed open file \"%1%\""} % ToSettingFilename).str());
+	// Open dest-setting-file
+	std::wofstream DestSettingFile;
+	DestSettingFile.imbue(locale{""});
+	DestSettingFile.open(DestSettingFilename);
+	if(DestSettingFile.fail())
+	{
+		log << L"error: failed open destination-setting-file" << endl;
+		throw dfs_backupper::exception{L"failed open destination-setting-file"};
+	}
 
 	for(const auto& BackupFilePair: BackupFilePairs)
 	{
-		FromSettingFile << BackupFilePair.first << endl;	// Write from-settings
-		ToSettingFile << BackupFilePair.second << endl;		// Write to-settings
+		SourceSettingFile << BackupFilePair.first << endl;	// Write source-settings
+		DestSettingFile << BackupFilePair.second << endl;	// Write dest-settings
 	}
+
+	log << L"successful wrote settings to setting file" << endl;
 }
 
-void dfs_backupper::setting::read()
+void dfs_backupper::setting::read(LogFile& log)
 {
-	// Open from-setting-file
-	std::wifstream FromSettingFile;
-	FromSettingFile.imbue(locale{""});
-	FromSettingFile.open(FromSettingFilename);
-	if(FromSettingFile.fail())
-		throw dfs_backupper::exception((wformat{L"failed open file \"%1%\""} % FromSettingFilename).str());
+	// Open source-setting-file
+	std::wifstream SourceSettingFile;
+	SourceSettingFile.imbue(locale{""});
+	SourceSettingFile.open(SourceSettingFilename);
+	if(SourceSettingFile.fail())
+	{
+		log << L"error: failed open source-setting-file" << endl;
+		throw dfs_backupper::exception{L"failed open source-setting-file"};
 
-	// Open to-setting-file
-	std::wifstream ToSettingFile;
-	ToSettingFile.imbue(locale{""});
-	ToSettingFile.open(ToSettingFilename);
-	if(ToSettingFile.fail())
-		throw dfs_backupper::exception((wformat{L"failed open file \"%1%\""} % ToSettingFilename).str());
+	// Open dest-setting-file
+	std::wifstream DestSettingFile;
+	DestSettingFile.imbue(locale{""});
+	DestSettingFile.open(DestSettingFilename);
+	if(DestSettingFile.fail())
+	{
+		log << L"error: failed open destination-setting-file" << endl;
+		throw dfs_backupper::exception{L"failed open destination-setting-file"};
+	}
 
 	while(true)
 	{
-		wstring FromSetting;
-		wstring ToSetting;
+		wstring SourceSetting;
+		wstring DestSetting;
 
-		if(!getline(FromSettingFile, FromSetting))
+		if(!getline(SourceSettingFile, SourceSetting))
 			break;
 
-		if(!getline(ToSettingFile, ToSetting))
+		if(!getline(DestSettingFile, DestSetting))
 			break;
 
-		BackupFilePairs.push_back(make_pair(FromSetting, ToSetting));
+		BackupFilePairs.push_back(make_pair(SourceSetting, DestSetting));
 	}
+
+	log << L"successful read settings" << endl;
 }
 
-void dfs_backupper::setting::remove(const wstring& from, const wstring& to)
+void dfs_backupper::setting::remove(const wstring& source, const wstring& dest, LogFile& log)
 {
-	const auto i{find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(from, to))};
+	const auto i{find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(source, dest))};
 	if(i == BackupFilePairs.end())	// not found
+	{
+		log << L"error: not found the setting" << endl;
 		throw dfs_backupper::exception{L"not found the setting"};
+	}
 
 	// Remove
 	if(BackupFilePairs.erase(i) == end(BackupFilePairs)) // failed
-		throw dfs_backupper::exception{L"failed remove"};
+	{
+		log << L"error: failed remove a setting" << endl;
+		throw dfs_backupper::exception{L"failed remove a setting"};
+	}
 
 	write();
 }

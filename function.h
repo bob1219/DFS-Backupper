@@ -13,17 +13,20 @@
 
 namespace dfs_backupper
 {
+	// declaration
+	class LogFile;
+
 	void CommandProcess(const std::vector<std::wstring>& args);
-	void copy_directory(const std::wstring& _sourceDirname, const std::wstring& _destDirname);
-	void copy_file(const std::wstring& SourceFilename, const std::wstring& DestFilename);
+	void copy_directory(const std::wstring& _sourceDirname, const std::wstring& _destDirname, LogFile& log);
+	void copy_file(const std::wstring& SourceFilename, const std::wstring& DestFilename, LogFile& log);
 
 	namespace command
 	{
-		void clear(const std::wstring& setting_name);
-		void list(const std::wstring& setting_name);
-		void add(const std::wstring& setting_name, const std::wstring& option, const std::wstring& source, const std::wstring& dest);
-		void run(const std::wstring& setting_name);
-		void remove(const std::wstring& setting_name, const std::wstring& option, const std::wstring& source, const std::wstring& dest);
+		void clear(const std::wstring& setting_name, LogFile& log);
+		void list(const std::wstring& setting_name, LogFile& log);
+		void add(const std::wstring& setting_name, const std::wstring& option, const std::wstring& source, const std::wstring& dest, LogFile& log);
+		void run(const std::wstring& setting_name, LogFile& log);
+		void remove(const std::wstring& setting_name, const std::wstring& option, const std::wstring& source, const std::wstring& dest, LogFile& log);
 	}
 }
 

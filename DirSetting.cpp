@@ -7,12 +7,13 @@
 // header
 #include "DirSetting.h"
 #include "function.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
 
-void dfs_backupper::DirSetting::run() const override
+void dfs_backupper::DirSetting::run(LogFile& log) const override
 {
 	for(const auto& BackupFilePair: BackupFilePairs)
-		dfs_backupper::copy_directory(BackupFilePair.first, BackupFilePair.second);
+		dfs_backupper::copy_directory(BackupFilePair.first, BackupFilePair.second, log);
 }

@@ -17,21 +17,24 @@
 
 namespace dfs_backupper
 {
+	// declaration
+	class LogFile;
+
 	class setting
 	{
 	public:
 		void open(const std::wstring& setting_name, SettingType type);
-		void read();
-		void clear();
+		void read(LogFile& log);
+		void clear(LogFile& log);
 		void list() const;
-		void add(const std::wstring& from, const std::wstring& to);
-		void remove(const std::wstring& from, const std::wstring& to);
-		virtual void run() const = 0;
+		void add(const std::wstring& from, const std::wstring& to, LogFile& log);
+		void remove(const std::wstring& from, const std::wstring& to, LogFile& log);
+		virtual void run(LogFile& log) const = 0;
 
 	private:
 		std::wstring FromSettingFilename;
 		std::wstring ToSettingFilename;
-		void write() const;
+		void write(LogFile& log) const;
 
 	protected:
 		std::vector<std::pair<std::wstring, std::wstring>> BackupFilePairs;
