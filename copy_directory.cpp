@@ -12,8 +12,6 @@
 
 // boost
 #include <boost/filesystem.hpp>
-#include <boost/foreach.hpp>
-#include <boost/format.hpp>
 
 // header
 #include "function.h"
@@ -26,12 +24,14 @@ using namespace boost;
 
 void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& destDirname)
 {
+	// Delete end character if it's path-break-character
 	const auto EndOfDestDirname{std::end(destDirname)};
 	const wstring DestDirname{std::begin(destDirname),
 		(*(EndOfDestDirname - 1) == PATH_BREAK_CHARACTER)
 			? (EndOfDestDirname - 1)
 			: EndOfDestDirname};
 
+	// Delete end character if it's path-break-character
 	const auto EndOfSourceDirname{std::end(sourceDirname)};
 	const wstring SourceDirname{std::begin(sourceDirname),
 		(*(EndOfSourceDirname - 1) == PATH_BREAK_CHARACTER)
@@ -41,6 +41,7 @@ void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& 
 	if(!is_directory(DestDirname))
 		copy_directory(SourceDirname, DestDirname);
 
+	// Remove files in destination-directory what don't exists in source-directory
 	unordered_set<wstring> FromDirectoryFiles;
 	for_each(directory_iterator{SourceDirname}, directory_iterator{}, [&](const wpath& p){ FromDirectoryFiles.insert(p.filename().wstring()); });
 	for_each(directory_iterator{DestDirname}, directory_iterator{}, [&](const wpath& p)
