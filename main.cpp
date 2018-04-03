@@ -11,10 +11,8 @@
 #include <string>
 #include <cstring>
 #include <exception>
-#include <cstddef>
 #include <memory>
 #include <clocale>
-#include <iterator>
 
 // boost
 #include <boost/system/system_error.hpp>
@@ -44,9 +42,7 @@ int wmain(int argc, wchar_t** argv)
 			return EXIT_FAILURE;
 		}
 
-		vector<wstring> args;
-		args.assign(argv, argv + argc);
-		CommandProcess(args);
+		CommandProcess(vector<wstring>{argv, argv + argc});
 
 		return EXIT_SUCCESS;
 	}
