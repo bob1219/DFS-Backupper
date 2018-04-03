@@ -20,6 +20,7 @@ namespace dfs_backupper
 	{
 	public:
 		// Constructors
+		FileSetting() = default;
 		explicit FileSetting(const std::wstring& setting_name) { open(setting_name, SettingType::FILE); }
 		FileSetting(const FileSetting&) = default;
 		FileSetting(FileSetting&&) = default;
