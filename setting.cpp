@@ -8,12 +8,9 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <locale>
-#include <cstddef>
 #include <algorithm>
 #include <iterator>
 #include <utility>
-#include <vector>
 
 // boost
 #include <boost/format.hpp>
@@ -79,6 +76,7 @@ void dfs_backupper::setting::list() const
 
 void dfs_backupper::setting::add(const wstring& SourceSettingFilename, const wstring& DestSettingFilename)
 {
+	// Check exists same setting
 	const auto BackupFilePair{make_pair(SourceSettingFilename, DestSettingFilename)};
 	const auto BackupFilePairsEnd{end(BackupFilePairs)};
 	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd)
@@ -106,8 +104,8 @@ void dfs_backupper::setting::write() const
 
 	for(const auto& BackupFilePair: BackupFilePairs)
 	{
-		FromSettingFile << BackupFilePair.first << endl;	// Write from-setting
-		ToSettingFile << BackupFilePair.second << endl;		// Write to-setting
+		FromSettingFile << BackupFilePair.first << endl;	// Write from-settings
+		ToSettingFile << BackupFilePair.second << endl;		// Write to-settings
 	}
 }
 
