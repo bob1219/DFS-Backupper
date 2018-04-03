@@ -38,7 +38,7 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 	{
 		boost::filesystem::copy_file(SourceFilename, DestFilename, copy_option::overwrite_if_exists);
 	}
-	catch(...)
+	catch(filesystem_error)
 	{
 		wcerr << wformat{L"failed:\t\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 		return;
