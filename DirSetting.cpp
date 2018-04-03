@@ -11,7 +11,7 @@
 // using
 using namespace std;
 
-void dfs_backupper::DirSetting::run() const
+void dfs_backupper::DirSetting::run() const override
 {
 	for(const auto& BackupFilePair: BackupFilePairs)
 		dfs_backupper::copy_directory(BackupFilePair.first, BackupFilePair.second);
