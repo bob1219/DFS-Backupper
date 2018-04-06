@@ -11,6 +11,7 @@
 // header
 #include "function.h"
 #include "exception.h"
+#include "LogFile.h"
 
 // using
 using namespace std;

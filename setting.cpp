@@ -20,6 +20,7 @@
 #include "setting.h"
 #include "exception.h"
 #include "constant.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
@@ -54,7 +55,7 @@ void dfs_backupper::setting::clear(LogFile& log)
 		catch(...)
 		{
 			wstring SettingDirectoryName{SettingDirectory.wstring()};
-			log << L"error: failed create setting directory" << endl;
+			log.write(L"error: failed create setting directory");
 			throw dfs_backupper::exception{L"failed create setting directory"};
 		}
 	}
@@ -62,19 +63,20 @@ void dfs_backupper::setting::clear(LogFile& log)
 	std::wofstream SourceSettingFile{SourceSettingFilename};
 	if(SourceSettingFile.fail())
 	{
-		log << L"error: failed clear source-setting-file" << endl;
+		log.write(L"error: failed clear source-setting-file");
 		throw dfs_backupper::exception{L"failed clear source-setting-file"};
 	}
 
 	std::wofstream DestSettingFile{DestSettingFilename};
 	if(DestSettingFile.fail())
 	{
-		log << L"error: failed clear destination-setting-file" << endl;
+		log.write(L"error: failed clear destination-setting-file");
 		throw dfs_backupper::exception{L"failed clear destination-setting-file"};
+	}
 
 	BackupFilePairs.clear();
 
-	log << L"successful clear settings" << endl;
+	log.write(L"successful clear settings");
 }
 
 void dfs_backupper::setting::list() const
@@ -90,14 +92,14 @@ void dfs_backupper::setting::add(const wstring& SourceSettingFilename, const wst
 	const auto BackupFilePairsEnd{end(BackupFilePairs)};
 	if(find(begin(BackupFilePairs), BackupFilePairsEnd, BackupFilePair) != BackupFilePairsEnd)
 	{
-		log << L"error: exists same setting" << endl;
+		log.write(L"error: exists same setting");
 		throw dfs_backupper::exception{L"exists same setting"};
 	}
 
 	BackupFilePairs.push_back(BackupFilePair);
 	write(log);
 
-	log << L"successful addition a setting" << endl;
+	log.write(L"successful addition a setting");
 }
 
 void dfs_backupper::setting::write(LogFile& log) const
@@ -108,7 +110,7 @@ void dfs_backupper::setting::write(LogFile& log) const
 	SourceSettingFile.open(SourceSettingFilename);
 	if(SourceSettingFile.fail())
 	{
-		log << L"error: failed open source-setting-file" << endl;
+		log.write(L"error: failed open source-setting-file");
 		throw dfs_backupper::exception{L"failed open source-setting-file"};
 	}
 
@@ -118,7 +120,7 @@ void dfs_backupper::setting::write(LogFile& log) const
 	DestSettingFile.open(DestSettingFilename);
 	if(DestSettingFile.fail())
 	{
-		log << L"error: failed open destination-setting-file" << endl;
+		log.write(L"error: failed open destination-setting-file");
 		throw dfs_backupper::exception{L"failed open destination-setting-file"};
 	}
 
@@ -128,7 +130,7 @@ void dfs_backupper::setting::write(LogFile& log) const
 		DestSettingFile << BackupFilePair.second << endl;	// Write dest-settings
 	}
 
-	log << L"successful wrote settings to setting file" << endl;
+	log.write(L"successful wrote settings to setting file");
 }
 
 void dfs_backupper::setting::read(LogFile& log)
@@ -139,8 +141,9 @@ void dfs_backupper::setting::read(LogFile& log)
 	SourceSettingFile.open(SourceSettingFilename);
 	if(SourceSettingFile.fail())
 	{
-		log << L"error: failed open source-setting-file" << endl;
+		log.write(L"error: failed open source-setting-file");
 		throw dfs_backupper::exception{L"failed open source-setting-file"};
+	}
 
 	// Open dest-setting-file
 	std::wifstream DestSettingFile;
@@ -148,7 +151,7 @@ void dfs_backupper::setting::read(LogFile& log)
 	DestSettingFile.open(DestSettingFilename);
 	if(DestSettingFile.fail())
 	{
-		log << L"error: failed open destination-setting-file" << endl;
+		log.write(L"error: failed open destination-setting-file");
 		throw dfs_backupper::exception{L"failed open destination-setting-file"};
 	}
 
@@ -166,7 +169,7 @@ void dfs_backupper::setting::read(LogFile& log)
 		BackupFilePairs.push_back(make_pair(SourceSetting, DestSetting));
 	}
 
-	log << L"successful read settings" << endl;
+	log.write(L"successful read settings");
 }
 
 void dfs_backupper::setting::remove(const wstring& source, const wstring& dest, LogFile& log)
@@ -174,16 +177,16 @@ void dfs_backupper::setting::remove(const wstring& source, const wstring& dest, 
 	const auto i{find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(source, dest))};
 	if(i == BackupFilePairs.end())	// not found
 	{
-		log << L"error: not found the setting" << endl;
+		log.write(L"error: not found the setting");
 		throw dfs_backupper::exception{L"not found the setting"};
 	}
 
 	// Remove
 	if(BackupFilePairs.erase(i) == end(BackupFilePairs)) // failed
 	{
-		log << L"error: failed remove a setting" << endl;
+		log.write(L"error: failed remove a setting");
 		throw dfs_backupper::exception{L"failed remove a setting"};
 	}
 
-	write();
+	write(log);
 }

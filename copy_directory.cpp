@@ -40,7 +40,7 @@ void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& 
 			: EndOfSourceDirname};
 
 	if(!is_directory(DestDirname))
-		copy_directory(SourceDirname, DestDirname);
+		boost::filesystem::copy_directory(SourceDirname, DestDirname);
 
 	// Remove files in destination-directory what don't exists in source-directory
 	unordered_set<wstring> SourceDirectoryFiles;

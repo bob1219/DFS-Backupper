@@ -32,8 +32,8 @@ namespace dfs_backupper
 		virtual void run(LogFile& log) const = 0;
 
 	private:
-		std::wstring FromSettingFilename;
-		std::wstring ToSettingFilename;
+		std::wstring SourceSettingFilename;
+		std::wstring DestSettingFilename;
 		void write(LogFile& log) const;
 
 	protected:
