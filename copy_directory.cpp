@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <iterator>
+#include <iostream>
 
 // boost
 #include <boost/filesystem.hpp>
@@ -54,7 +55,7 @@ void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& 
 	// Copy other files and directories
 	for(const auto& SourceDirectoryFile: SourceDirectoryFiles)
 	{
-		if(is_regular_file(SourceDirectoryFile))
+		if(is_regular_file(SourceDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile))
 			dfs_backupper::copy_file(SourceDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, DestDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, log);
 		else
 			dfs_backupper::copy_directory(SourceDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, DestDirname + PATH_BREAK_CHARACTER + SourceDirectoryFile, log);
