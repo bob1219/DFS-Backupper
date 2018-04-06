@@ -174,15 +174,16 @@ void dfs_backupper::setting::base_read(LogFile& log, SettingType type)
 
 void dfs_backupper::setting::base_remove(const wstring& source, const wstring& dest, LogFile& log, SettingType type)
 {
-	const auto i{find(begin(BackupFilePairs), end(BackupFilePairs), make_pair(source, dest))};
-	if(i == BackupFilePairs.end())	// not found
+	const auto EndOfBackupFilePairs{end(BackupFilePairs)};
+	const auto i{find(begin(BackupFilePairs), EndOfBackupFilePairs, make_pair(source, dest))};
+	if(i == EndOfBackupFilePairs) // not found
 	{
 		log.write(L"error: not found the setting");
 		throw dfs_backupper::exception{L"not found the setting"};
 	}
 
 	// Remove
-	if(BackupFilePairs.erase(i) == end(BackupFilePairs)) // failed
+	if(BackupFilePairs.erase(i) == EndOfBackupFilePairs) // failed
 	{
 		log.write(L"error: failed remove a setting");
 		throw dfs_backupper::exception{L"failed remove a setting"};

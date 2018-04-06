@@ -48,7 +48,7 @@ void dfs_backupper::copy_directory(const wstring& sourceDirname, const wstring& 
 	for_each(directory_iterator{SourceDirname}, directory_iterator{}, [&](const wpath& p){ SourceDirectoryFiles.insert(p.filename().wstring()); });
 	for_each(directory_iterator{DestDirname}, directory_iterator{}, [&](const wpath& p)
 	{
-		if(SourceDirectoryFiles.find(p.filename().wstring()) == SourceDirectoryFiles.end())
+		if(SourceDirectoryFiles.find(p.filename().wstring()) == std::end(SourceDirectoryFiles))
 			remove(p);
 	});
 

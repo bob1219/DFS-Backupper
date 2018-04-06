@@ -25,14 +25,14 @@ using namespace boost;
 dfs_backupper::LogFile::LogFile()
 {
 	const auto timer{time(nullptr)};
-	const tm* data{localtime(&timer)};
+	const auto* data{localtime(&timer)};
 	LogFilename = (wformat{L".%1%logs%1%%2$02d-%3$02d-%4$02d.log"} % PATH_BREAK_CHARACTER % (data->tm_mon + 1) % data->tm_mday % (data->tm_year + 1900)).str();
 }
 
 void dfs_backupper::LogFile::write(const wstring& message)
 {
 	const auto timer{time(nullptr)};
-	const tm* data{localtime(&timer)};
+	const auto* data{localtime(&timer)};
 
 	wofstream file;
 	file.imbue(locale{""});
