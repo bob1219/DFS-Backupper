@@ -16,7 +16,7 @@ namespace dfs_backupper
 	// declaration
 	class LogFile;
 
-	void CommandProcess(const std::vector<std::wstring>& args);
+	void CommandProcess(const std::vector<std::wstring>& args, LogFile& log);
 	void copy_directory(const std::wstring& _sourceDirname, const std::wstring& _destDirname, LogFile& log);
 	void copy_file(const std::wstring& SourceFilename, const std::wstring& DestFilename, LogFile& log);
 

@@ -26,7 +26,8 @@ namespace dfs_backupper
 		// Operators
 		LogFile& operator=(const LogFile&) = default;
 		LogFile& operator=(LogFile&&) = default;
-		template<typename T> LogFile& operator<<(const T& data);
+
+		void write(const std::wstring& message);
 	};
 }
 

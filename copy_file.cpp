@@ -15,6 +15,7 @@
 
 // header
 #include "function.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
@@ -29,7 +30,7 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 		const auto ToFileLastUpdate{last_write_time(DestFilename)};
 		if(difftime(ToFileLastUpdate, FromFileLastUpdate) >= 0)
 		{
-			log << wformat{L"not need update: %1% -> %2%"} % SourceFilename % DestFilename << endl;
+			log.write((wformat{L"not need update: %1% -> %2%"} % SourceFilename % DestFilename).str());
 			wcout << wformat{L"not need update:\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 			return;
 		}
@@ -41,11 +42,11 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 	}
 	catch(filesystem_error)
 	{
-		log << wformat{L"failed update: %1% -> %2%"} % SourceFilename % DestFilename << endl;
+		log.write((wformat{L"failed update: %1% -> %2%"} % SourceFilename % DestFilename).str());
 		wcerr << wformat{L"failed:\t\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 		return;
 	}
 	
-	log << wformat{L"successful update: %1% -> %2%"} % SourceFilename % DestFilename << endl;
+	log.write((wformat{L"successful update: %1% -> %2%"} % SourceFilename % DestFilename).str());
 	wcout << wformat{L"successful:\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 }

@@ -12,7 +12,7 @@
 // using
 using namespace std;
 
-void dfs_backupper::FileSetting::run(LogFile& log) const override
+void dfs_backupper::FileSetting::run(LogFile& log) const
 {
 	for(const auto& BackupFilePair: BackupFilePairs)
 		dfs_backupper::copy_file(BackupFilePair.first, BackupFilePair.second, log);

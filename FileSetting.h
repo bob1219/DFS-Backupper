@@ -33,6 +33,10 @@ namespace dfs_backupper
 		FileSetting& operator=(FileSetting&&) = default;
 
 		void run(LogFile& log) const override;
+		void read(LogFile& log) override { base_read(log, SettingType::FILE); }
+		void clear(LogFile& log) override { base_clear(log, SettingType::FILE); }
+		void remove(const std::wstring& source, const std::wstring& dest, LogFile& log) override { base_remove(source, dest, log, SettingType::FILE); }
+		void add(const std::wstring& source, const std::wstring& dest, LogFile& log) override { base_add(source, dest, log, SettingType::FILE); }
 	};
 }
 
