@@ -36,7 +36,7 @@ void dfs_backupper::LogFile::write(const wstring& message)
 
 	wofstream file;
 	file.imbue(locale{""});
-	file.open(LogFilename);
+	file.open(LogFilename, ios_base::out | ios_base::app);
 	if(file.fail())
 		throw dfs_backupper::exception{L"failed open log-file"};
 
