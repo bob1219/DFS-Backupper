@@ -16,10 +16,9 @@
 // using
 using namespace std;
 
-void dfs_backupper::CommandProcess(const vector<wstring>& args)
+void dfs_backupper::CommandProcess(const vector<wstring>& args, LogFile& log)
 {
 	auto arg_error = [](){ throw dfs_backupper::exception{L"few or many arguments"}; };
-	LogFile log;
 
 	if(args.at(1) == L"clear")
 	{
