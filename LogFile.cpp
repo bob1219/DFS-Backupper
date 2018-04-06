@@ -26,7 +26,7 @@ dfs_backupper::LogFile::LogFile()
 {
 	const auto timer{time(nullptr)};
 	const tm* data{localtime(&timer)};
-	LogFilename = (wformat{L".%1%logs%1%%2%-%3%-%4%.log"} % PATH_BREAK_CHARACTER % (data->tm_mon + 1) % data->tm_mday % (data->tm_year + 1900)).str();
+	LogFilename = (wformat{L".%1%logs%1%%2$02d-%3$02d-%4$02d.log"} % PATH_BREAK_CHARACTER % (data->tm_mon + 1) % data->tm_mday % (data->tm_year + 1900)).str();
 }
 
 void dfs_backupper::LogFile::write(const wstring& message)
@@ -40,7 +40,7 @@ void dfs_backupper::LogFile::write(const wstring& message)
 	if(file.fail())
 		throw dfs_backupper::exception{L"failed open log-file"};
 
-	file << wformat{L"[%1$02d/$2$02d/%3% %4$02d:%5$02d:%6$02d] %7%"}	% (data->tm_mon + 1)
+	file << wformat{L"[%1$02d/%2$02d/%3% %4$02d:%5$02d:%6$02d] %7%"}	% (data->tm_mon + 1)
 										% data->tm_mday
 										% (data->tm_year + 1900)
 										% data->tm_hour
