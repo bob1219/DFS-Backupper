@@ -11,11 +11,12 @@
 // header
 #include "function.h"
 #include "exception.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
 
-void dfs_backupper::CommandProcess(const vector<wstring>& args)
+void dfs_backupper::CommandProcess(const vector<wstring>& args, LogFile& log)
 {
 	auto arg_error = [](){ throw dfs_backupper::exception{L"few or many arguments"}; };
 
@@ -23,31 +24,31 @@ void dfs_backupper::CommandProcess(const vector<wstring>& args)
 	{
 		if(args.size() != 3)
 			arg_error();
-		command::clear(args.at(2));
+		command::clear(args.at(2), log);
 	}
 	else if(args.at(1) == L"list")
 	{
 		if(args.size() != 3)
 			arg_error();
-		command::list(args.at(2));
+		command::list(args.at(2), log);
 	}
 	else if(args.at(1) == L"add")
 	{
 		if(args.size() != 6)
 			arg_error();
-		command::add(args.at(2), args.at(3), args.at(4), args.at(5));
+		command::add(args.at(2), args.at(3), args.at(4), args.at(5), log);
 	}
 	else if(args.at(1) == L"run")
 	{
 		if(args.size() != 3)
 			arg_error();
-		command::run(args.at(2));
+		command::run(args.at(2), log);
 	}
 	else if(args.at(1) == L"remove")
 	{
 		if(args.size() != 6)
 			arg_error();
-		command::remove(args.at(2), args.at(3), args.at(4), args.at(5));
+		command::remove(args.at(2), args.at(3), args.at(4), args.at(5), log);
 	}
 	else throw dfs_backupper::exception{L"unknown command"};
 }

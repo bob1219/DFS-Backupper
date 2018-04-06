@@ -63,17 +63,27 @@ Files
 	* exception.cpp
 	* main.cpp
 	* setting.cpp
+	* LogFile.cpp
+	* copy\_file.cpp
 
 * Header file
-	* class.h
+	* DirSetting.h
+	* FileSetting.h
+	* setting.h
+	* exception.h
 	* constant.h
 	* function.h
+	* LogFile.h
 
 * Other
 	* .gitignore
 	* LICENSE
 	* boost/
 	* makefile
+	* logs/
+	* settings/
+	* backup.exe
+	* README.md
 
 History
 -------
@@ -113,8 +123,11 @@ History
 * 5.4 (March 31st, 2018)
 	* Modify designs
 
+* 6.0 (April 6th, 2018)
+	* Addition log feature
+
 License
 -------
-Copyright 2018 Daiki Yoshida. All rights reserved.
-This program and its source file and header file are licensed by GNU-GPL v3.0.
-You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
+Copyright 2018 Daiki Yoshida. All rights reserved.  
+This program and its source file and header file are licensed by GNU-GPL v3.0.  
+You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).  

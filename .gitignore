@@ -2,3 +2,5 @@
 *.obj
 settings/*
 !.gitkeep
+logs/*
+!.gitkeep

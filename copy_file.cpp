@@ -15,13 +15,14 @@
 
 // header
 #include "function.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
 using namespace boost;
 using namespace boost::filesystem;
 
-void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& DestFilename)
+void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& DestFilename, LogFile& log)
 {
 	if(is_regular_file(DestFilename))
 	{
@@ -29,6 +30,7 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 		const auto ToFileLastUpdate{last_write_time(DestFilename)};
 		if(difftime(ToFileLastUpdate, FromFileLastUpdate) >= 0)
 		{
+			log.write((wformat{L"not need update: %1% -> %2%"} % SourceFilename % DestFilename).str());
 			wcout << wformat{L"not need update:\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 			return;
 		}
@@ -38,11 +40,13 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 	{
 		boost::filesystem::copy_file(SourceFilename, DestFilename, copy_option::overwrite_if_exists);
 	}
-	catch(...)
+	catch(filesystem_error)
 	{
+		log.write((wformat{L"failed update: %1% -> %2%"} % SourceFilename % DestFilename).str());
 		wcerr << wformat{L"failed:\t\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 		return;
 	}
 	
+	log.write((wformat{L"successful update: %1% -> %2%"} % SourceFilename % DestFilename).str());
 	wcout << wformat{L"successful:\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 }

@@ -11,10 +11,8 @@
 #include <string>
 #include <cstring>
 #include <exception>
-#include <cstddef>
 #include <memory>
 #include <clocale>
-#include <iterator>
 
 // boost
 #include <boost/system/system_error.hpp>
@@ -23,6 +21,7 @@
 // header
 #include "function.h"
 #include "exception.h"
+#include "LogFile.h"
 
 // using
 using namespace std;
@@ -31,6 +30,8 @@ using namespace boost;
 
 int wmain(int argc, wchar_t** argv)
 {
+	LogFile log;
+
 	try
 	{
 		wcout.imbue(locale{""});
@@ -44,9 +45,7 @@ int wmain(int argc, wchar_t** argv)
 			return EXIT_FAILURE;
 		}
 
-		vector<wstring> args;
-		args.assign(argv, argv + argc);
-		CommandProcess(args);
+		CommandProcess(vector<wstring>{argv, argv + argc}, log);
 
 		return EXIT_SUCCESS;
 	}
@@ -57,9 +56,13 @@ int wmain(int argc, wchar_t** argv)
 		unique_ptr<wchar_t[]>	mess{new wchar_t[mess_len + 1]};
 		mbstowcs(mess.get(), mess_c, mess_len + 1);
 
+		const auto ErrorCode{e.code().value()};
+
 		wcerr << L"error:" << endl;
 		wcerr << mess.get() << endl;
-		wcerr << wformat{L"(error code: %1%)"} % e.code().value() << endl;
+		wcerr << wformat{L"(error code: %1%)"} % ErrorCode << endl;
+
+		log.write((wformat{L"error: %1% (error code: %2%)"} % mess.get() % ErrorCode).str());
 	}
 	catch(std::exception& e)
 	{
@@ -70,11 +73,17 @@ int wmain(int argc, wchar_t** argv)
 
 		wcerr << L"error:" << endl;
 		wcerr << mess.get() << endl;
+
+		log.write((wformat{L"error: %1%"} % mess.get()).str());
 	}
 	catch(dfs_backupper::exception& e)
 	{
+		const auto mess{e.getMessage()};
+
 		wcerr << L"error:" << endl;
-		wcerr << e.getMessage() << endl;
+		wcerr << mess << endl;
+
+		log.write((wformat{L"error: %1%"} % mess).str());
 	}
 
 	return EXIT_FAILURE;
