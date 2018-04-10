@@ -1,8 +1,19 @@
-// main.cpp
 // Copyright 2018 Daiki Yoshida. All rights reserved.
-// This file is a source file in DFS-Backupper project.
-// This file and DFS-Backupper project are licensed by GNU-GPL v3.0.
-// You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
+//
+// This file is part of DFS-Backupper.
+//
+// DFS-Backupper is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DFS-Backupper is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DFS-Backupper. If not, see <http://www.gnu.org/license/>.
 
 // standard library
 #include <iostream>
@@ -53,28 +64,31 @@ int wmain(int argc, wchar_t** argv)
 	{
 		const auto		mess_c{e.what()};
 		const auto		mess_len{strlen(mess_c)};
-		unique_ptr<wchar_t[]>	mess{new wchar_t[mess_len + 1]};
-		mbstowcs(mess.get(), mess_c, mess_len + 1);
+		unique_ptr<wchar_t[]>	mess_p{new wchar_t[mess_len + 1]};
+		mbstowcs(mess_p.get(), mess_c, mess_len + 1);
 
 		const auto ErrorCode{e.code().value()};
+		const auto mess{mess_p.get()};
 
 		wcerr << L"error:" << endl;
-		wcerr << mess.get() << endl;
+		wcerr << mess << endl;
 		wcerr << wformat{L"(error code: %1%)"} % ErrorCode << endl;
 
-		log.write((wformat{L"error: %1% (error code: %2%)"} % mess.get() % ErrorCode).str());
+		log.write((wformat{L"error: %1% (error code: %2%)"} % mess % ErrorCode).str());
 	}
 	catch(std::exception& e)
 	{
 		const auto		mess_c{e.what()};
 		const auto		mess_len{strlen(mess_c)};
-		unique_ptr<wchar_t[]>	mess{new wchar_t[mess_len + 1]};
-		mbstowcs(mess.get(), mess_c, mess_len + 1);
+		unique_ptr<wchar_t[]>	mess_p{new wchar_t[mess_len + 1]};
+		mbstowcs(mess_p.get(), mess_c, mess_len + 1);
+
+		const auto mess{mess_p.get()};
 
 		wcerr << L"error:" << endl;
-		wcerr << mess.get() << endl;
+		wcerr << mess << endl;
 
-		log.write((wformat{L"error: %1%"} % mess.get()).str());
+		log.write((wformat{L"error: %1%"} % mess).str());
 	}
 	catch(dfs_backupper::exception& e)
 	{

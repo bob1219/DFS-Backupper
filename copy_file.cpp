@@ -1,8 +1,19 @@
-// copy_file.cpp
 // Copyright 2018 Daiki Yoshida. All rights reserved.
-// This file is a source file in DFS-Backupper project.
-// This file and DFS-Backupper project are licensed by GNU-GPL v3.0.
-// You can see document of GNU-GPL v3.0 in "LICENSE" file or GNU official website(https://www.gnu.org/licenses/gpl-3.0.en.html).
+//
+// This file is part of DFS-Backupper.
+//
+// DFS-Backupper is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DFS-Backupper is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DFS-Backupper. If not, see <http://www.gnu.org/license/>.
 
 // standard library
 #include <string>
@@ -42,11 +53,11 @@ void dfs_backupper::copy_file(const wstring& SourceFilename, const wstring& Dest
 	}
 	catch(filesystem_error)
 	{
-		log.write((wformat{L"failed update: %1% -> %2%"} % SourceFilename % DestFilename).str());
+		log.write((wformat{L"failed: %1% -> %2%"} % SourceFilename % DestFilename).str());
 		wcerr << wformat{L"failed:\t\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 		return;
 	}
 	
-	log.write((wformat{L"successful update: %1% -> %2%"} % SourceFilename % DestFilename).str());
+	log.write((wformat{L"successful: %1% -> %2%"} % SourceFilename % DestFilename).str());
 	wcout << wformat{L"successful:\t\t%1% -> %2%"} % SourceFilename % DestFilename << endl;
 }
