@@ -27,5 +27,4 @@ void dfs_backupper::DirSetting::run(LogFile& log) const
 {
 	for(const auto& BackupFilePair: BackupFilePairs)
 		dfs_backupper::copy_directory(BackupFilePair.first, BackupFilePair.second, log);
-	log.write(L"backup was successful");
 }
