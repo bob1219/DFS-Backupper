@@ -109,7 +109,7 @@ void dfs_backupper::setting::base_add(const wstring& SourceSettingFilename, cons
 	BackupFilePairs.push_back(BackupFilePair);
 	write(log, type);
 
-	log.write(L"successful addition a setting");
+	log.write((wformat{L"successful addition a %1% setting"} % ((type == SettingType::DIRECTORY) ? L"directory" : L"file")).str());
 }
 
 void dfs_backupper::setting::write(LogFile& log, SettingType type) const

@@ -81,6 +81,8 @@ void dfs_backupper::command::run(const wstring& setting_name, LogFile& log)
 
 	dirSetting.run(log);
 	fileSetting.run(log);
+
+	log.write(L"backup was successful");
 }
 
 void dfs_backupper::command::remove(const wstring& setting_name, const wstring& option, const wstring& source, const wstring& dest, LogFile& log)
